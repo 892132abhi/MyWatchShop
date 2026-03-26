@@ -1,0 +1,120 @@
+.admin-login-page {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fcfbf9; /* Off-white luxury background */
+    font-family: 'Montserrat', sans-serif;
+}
+
+.luxury-login-card {
+    background: white;
+    width: 400px;
+    padding: 50px 40px;
+    border: 1px solid #eee;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.05);
+    position: relative;
+    text-align: center;
+}
+
+.back-btn {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: none;
+    border: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #999;
+    cursor: pointer;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: 0.3s;
+}
+
+.back-btn:hover {
+    color: #1a1a1a;
+}
+
+.login-header {
+    margin-bottom: 40px;
+}
+
+.brand-dot {
+    width: 8px;
+    height: 8px;
+    background: #d4af37; /* Gold */
+    border-radius: 50%;
+    margin: 0 auto 15px;
+}
+
+.login-header h3 {
+    font-family: 'Playfair Display', serif;
+    letter-spacing: 4px;
+    margin: 0;
+    font-size: 1.4rem;
+    color: #1a1a1a;
+}
+
+.login-header p {
+    font-size: 10px;
+    text-transform: uppercase;
+    color: #aaa;
+    margin-top: 10px;
+    letter-spacing: 2px;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.input-wrapper {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.input-wrapper label {
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: #777;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.input-wrapper input {
+    padding: 12px 0;
+    border: none;
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
+    transition: 0.3s;
+}
+
+.input-wrapper input:focus {
+    outline: none;
+    border-bottom-color: #1a1a1a;
+}
+
+.login-submit-btn {
+    margin-top: 15px;
+    background: #1a1a1a;
+    color: white;
+    border: none;
+    padding: 15px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.login-submit-btn:hover {
+    background: #d4af37;
+    box-shadow: 0 10px 20px rgba(212, 175, 55, 0.2);
+}

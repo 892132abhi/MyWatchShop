@@ -1,0 +1,137 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@700&display=swap');
+
+.order-details-wrapper {
+    font-family: 'Inter', sans-serif;
+    color: #1a1a1a;
+}
+
+.page-header {
+    margin-bottom: 30px;
+}
+
+.page-header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    margin: 0;
+    color: #1a1a1a;
+}
+
+.page-header p {
+    font-size: 0.8rem;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* TABLE STYLING */
+.table-scroll-container {
+    background: #fff;
+    border: 1px solid #eee;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+    max-height: 75vh;
+    overflow-y: auto;
+}
+
+.luxury-order-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.luxury-order-table thead th {
+    background: #0f0f0f;
+    color: #fff;
+    padding: 20px;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-weight: 500;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.luxury-order-table td {
+    padding: 20px;
+    border-bottom: 1px solid #f8f8f8;
+    vertical-align: top;
+}
+
+/* CELL SPECIFICS */
+.client-name {
+    display: block;
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: #1a1a1a;
+}
+
+.client-email {
+    display: block;
+    font-size: 0.75rem;
+    color: #999;
+}
+
+.brand-tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    color: #d4af37;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+}
+
+.item-name {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.item-qty {
+    font-size: 11px;
+    color: #aaa;
+}
+
+.unit-price {
+    display: block;
+    font-size: 11px;
+    color: #888;
+}
+
+.total-price {
+    display: block;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: #1a1a1a;
+}
+
+.date-cell {
+    font-size: 0.85rem;
+    color: #666;
+}
+
+/* STATUS BADGES */
+.status-badge {
+    padding: 6px 12px;
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-radius: 2px;
+}
+
+.status-badge.shipped {
+    background: #f0fdf4;
+    color: #166534;
+    border: 1px solid #bbf7d0;
+}
+
+.status-badge.canceled {
+    background: #fef2f2;
+    color: #991b1b;
+    border: 1px solid #fecaca;
+}
+
+/* HOVER EFFECT */
+.order-row:hover {
+    background-color: #fafafa;
+}

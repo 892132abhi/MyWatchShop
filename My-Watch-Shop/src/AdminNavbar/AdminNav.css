@@ -1,0 +1,149 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@700&display=swap');
+
+.admin-layout-wrapper {
+    display: flex;
+    min-height: 100vh;
+    background-color: #fcfcfc;
+}
+
+.admin-sidebar {
+    width: 280px;
+    background-color: #0f0f0f; /* Deep Matte Black */
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    border-right: 1px solid #222;
+}
+
+/* BRANDING */
+.sidebar-brand {
+    padding: 40px 30px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.brand-logo {
+    width: 40px;
+    height: 40px;
+    background: #d4af37; /* Gold */
+    color: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+.brand-title {
+    display: block;
+    font-weight: 600;
+    letter-spacing: 2px;
+    font-size: 0.8rem;
+}
+
+.admin-badge {
+    font-size: 10px;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* USER PROFILE */
+.user-profile-section {
+    padding: 0 30px 40px;
+}
+
+.welcome-text {
+    font-size: 10px;
+    text-transform: uppercase;
+    color: #555;
+    margin: 0;
+}
+
+.admin-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    color: #d4af37;
+    margin-top: 5px;
+}
+
+/* NAVIGATION */
+.nav-menu {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 0 15px;
+}
+
+.nav-item {
+    background: transparent;
+    border: none;
+    color: #888;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 14px 20px;
+    width: 100%;
+    cursor: pointer;
+    border-radius: 4px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.nav-item span {
+    font-weight: 500;
+}
+
+.nav-item:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.nav-item.active {
+    background: #d4af37;
+    color: #000;
+}
+
+/* FOOTER / LOGOUT */
+.sidebar-footer {
+    padding: 30px;
+    border-top: 1px solid #222;
+}
+
+.logout-btn {
+    background: transparent;
+    border: 1px solid #333;
+    color: #e74c3c;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 12px;
+    width: 100%;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    transition: 0.3s;
+}
+
+.logout-btn:hover {
+    background: #e74c3c;
+    color: #fff;
+    border-color: #e74c3c;
+}
+
+/* CONTENT AREA */
+.admin-main-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 40px;
+}

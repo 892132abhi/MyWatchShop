@@ -1,0 +1,231 @@
+/* --- LUXURY CART THEME --- */
+body {
+  background-color: #fcfbf9;
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* Header Section */
+.cart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 40px 10%;
+  border-bottom: 1px solid #eee;
+  background: #fff;
+}
+
+.total-summary h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+.total-summary span {
+  color: #d4af37; /* Gold for amount */
+}
+
+/* Card Container */
+.cart-container {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  padding: 40px 10%;
+}
+
+.cart-item-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #fff;
+  border: 1px solid #eee;
+  padding: 20px;
+  transition: 0.3s;
+  position: relative;
+}
+
+.cart-item-row:hover {
+  border-color: #d4af37;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+}
+
+/* Image Styling */
+.cart-img-wrapper img {
+  width: 180px;
+  height: 180px;
+  object-fit: contain;
+  background: #fcfcfc;
+}
+
+/* Description & Info */
+.cart-info {
+  flex: 2;
+  padding: 0 40px;
+  text-align: left;
+}
+
+.cart-info h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+  color: #1a1a1a;
+}
+
+/* Price Styling */
+.pricep {
+  color: #d4af37 !important;
+  font-family: 'Montserrat', sans-serif !important;
+  font-size: 1.3rem !important;
+  font-weight: 600 !important;
+}
+
+/* Action Buttons */
+.cart-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.btn-purchase {
+  background: #1a1a1a;
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 11px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn-purchase:hover {
+  background: #d4af37;
+  color: #000;
+}
+
+.btn-remove {
+  background: transparent;
+  color: #888;
+  border: 1px solid #eee;
+  padding: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn-remove:hover {
+  color: #ff4d4d;
+  border-color: #ff4d4d;
+}
+
+/* Quantity Control (Boxy Style) */
+.luxury-qty {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ddd;
+}
+
+.luxury-qty button {
+  background: #f8f8f8;
+  border: none;
+  width: 35px;
+  height: 35px;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.luxury-qty input {
+  width: 45px;
+  border: none;
+  text-align: center;
+  font-weight: 600;
+  font-family: 'Montserrat';
+}
+
+/* Empty State */
+.empty-cart {
+  text-align: center;
+  padding: 100px;
+}
+
+.empty-cart h2 {
+  font-family: 'Playfair Display';
+  color: #ccc;
+  font-size: 3rem;
+}
+/* --- BUTTON COLORS & REFINEMENTS --- */
+
+/* Back to Boutique Button */
+.back-btn-luxury {
+  background: transparent;
+  color: #1a1a1a;
+  border: 1px solid #1a1a1a;
+  padding: 10px 20px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: 0.4s;
+  text-transform: uppercase;
+}
+
+.back-btn-luxury:hover {
+  background: #1a1a1a;
+  color: #fff;
+}
+
+/* Main Checkout button in Header */
+.btn-checkout-all {
+  background: #d4af37; /* Premium Gold */
+  color: #000;
+  border: none;
+  padding: 12px 30px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+  transition: 0.3s;
+}
+
+.btn-checkout-all:hover {
+  background: #1a1a1a;
+  color: #d4af37;
+  transform: translateY(-2px);
+}
+
+/* Row-specific Purchase button */
+.btn-purchase {
+  background: #1a1a1a;
+  color: white;
+  border: 1px solid #1a1a1a;
+  padding: 12px 25px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn-purchase:hover {
+  background: transparent;
+  color: #1a1a1a;
+}
+
+/* Checkbox Style (Gold Tint) */
+.luxury-checkbox {
+  accent-color: #d4af37;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}

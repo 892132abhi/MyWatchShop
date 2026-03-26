@@ -1,0 +1,121 @@
+/* ====== LUXURY BOUTIQUE THEME ====== */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Playfair+Display:ital,wght@0,700;1,400&display=swap');
+
+.luxury-page-wrapper {
+    background-color: #fcfbf9; /* Signature off-white */
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.Form {
+    max-width: 420px;
+    width: 90%;
+    padding: 60px 50px;
+    background-color: #ffffff;
+    text-align: center;
+    border: 1px solid #f0f0f0;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.02);
+}
+
+.Form h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.4rem;
+    color: #1a1a1a;
+    margin-bottom: 5px;
+    letter-spacing: -1px;
+}
+
+.subtitle {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    color: #888;
+    font-size: 0.9rem;
+    margin-bottom: 40px;
+}
+
+.regist {
+    margin-bottom: 25px;
+    text-align: left;
+}
+
+.labels {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.labels label {
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #1a1a1a;
+}
+
+.labels input {
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid #e0e0e0;
+    padding: 10px 0;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1rem;
+    background: transparent;
+    transition: all 0.4s ease;
+    border-radius: 0;
+}
+
+.labels input:focus {
+    outline: none;
+    border-bottom: 1px solid #d4af37;
+    padding-left: 5px;
+}
+
+/* Luxury Button Styling */
+.luxury-submit-btn {
+    width: 100%;
+    background-color: #1a1a1a;
+    color: #fff;
+    border: none;
+    padding: 16px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: 0.3s;
+}
+
+.luxury-submit-btn:hover {
+    background-color: #d4af37;
+    color: #1a1a1a;
+}
+
+.error-text {
+    color: #d63031;
+    font-size: 0.8rem;
+    margin-top: 15px;
+    font-style: italic;
+}
+
+.form-footer {
+    margin-top: 30px;
+    font-size: 0.8rem;
+    color: #666;
+}
+
+.login-link-btn {
+    background: none;
+    border: none;
+    border-bottom: 1px solid #d4af37;
+    color: #1a1a1a;
+    font-weight: 700;
+    margin-left: 8px;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+}

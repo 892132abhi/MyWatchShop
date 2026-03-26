@@ -1,0 +1,52 @@
+.custom-navbar {
+  background: #0a0f14;
+  padding: 15px 25px;
+  border-bottom: 2px solid aqua;
+}
+
+.brand-name {
+  color: white;
+  font-family: "Poppins", sans-serif;
+}
+
+.username {
+  color: aqua;
+  font-family: "Poppins";
+  margin-right: 10px;
+}
+
+.nav-btn {
+  border: 1px solid aqua;
+  color: aqua;
+  font-weight: 500;
+  transition: 0.3s ease-in-out;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.nav-btn:hover {
+  background: aqua;
+  color: #0a0f14;
+  transform: scale(1.04);
+}
+
+.wishlist-btn {
+  border-color: #ff4b4b;
+  color: #ff4b4b;
+}
+
+.wishlist-btn:hover {
+  background: #ff4b4b;
+  color: white;
+}
+
+.logout-btn {
+  border-color: #ffae00;
+  color: #ffae00;
+}
+
+.logout-btn:hover {
+  background: #ffae00;
+  color: #0a0f14;
+}

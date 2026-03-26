@@ -1,0 +1,135 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Playfair+Display:wght@600&display=swap');
+
+html, body {
+    background-color: #fcfbf9 !important; 
+    margin: 0;
+    overscroll-behavior-y: none;
+    overscroll-behavior-x: none;
+}
+.order-page-container {
+    background-color: #fcfbf9;
+    min-height: 100vh;
+    padding: 60px 40px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.order-header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.order-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    color: #1a1a1a;
+    margin: 0;
+    letter-spacing: -1px;
+}
+
+.order-header p {
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    font-size: 0.7rem;
+    color: #d4af37; /* Gold */
+    margin-top: 10px;
+}
+
+/* TABLE STYLING */
+.table-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    background: #ffffff;
+    border: 1px solid #eee;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.02);
+    overflow-x: auto;
+    overscroll-behavior-y: none;
+}
+
+.luxury-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.luxury-table thead tr {
+    background-color: #1a1a1a;
+    color: #fff;
+}
+
+.luxury-table th {
+    padding: 20px 25px;
+    font-weight: 600;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.luxury-table td {
+    padding: 20px 25px;
+    border-bottom: 1px solid #f9f9f9;
+    font-size: 0.85rem;
+    color: #444;
+    transition: background 0.3s ease;
+}
+
+.luxury-table tbody tr:hover td {
+    background-color: #fcfbf9;
+}
+
+/* CELL SPECIFICS */
+.client-cell {
+    display: flex;
+    flex-direction: column;
+}
+
+.client-name {
+    font-weight: 600;
+    color: #1a1a1a;
+}
+
+.client-email {
+    font-size: 0.7rem;
+    color: #999;
+}
+
+.brand-cell {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-weight: 600;
+}
+
+.total-cell {
+    font-weight: 600;
+    color: #1a1a1a;
+}
+
+.date-cell {
+    font-size: 0.75rem;
+    color: #777;
+}
+
+/* STATUS BADGES */
+.status-badge {
+    padding: 6px 12px;
+    font-size: 0.6rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-radius: 2px;
+}
+
+.status-shipped {
+    background-color: #f0f9f0;
+    color: #27ae60;
+    border: 1px solid #e0efe0;
+}
+
+.status-canceled {
+    background-color: #fff5f5;
+    color: #e74c3c;
+    border: 1px solid #ffebeb;
+}
+
+.text-center {
+    text-align: center;
+}

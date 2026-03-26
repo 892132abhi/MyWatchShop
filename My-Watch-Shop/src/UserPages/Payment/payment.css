@@ -1,0 +1,58 @@
+/* Container */
+.payment-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    margin: 20px 40px;
+    justify-content: flex-start;
+}
+
+/* Card Style */
+.payment-card {
+    width: 220px;
+    padding: 15px;
+    border-radius: 12px;
+    background: #ffffff;
+    border: 1px solid #ddd;
+    text-align: center;
+    transition: 0.3s ease;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.payment-card:hover {
+   
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+/* Product Image */
+.payment-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+/* Button */
+.payment-btn {
+    width: 50%;
+    padding: 10px;
+    margin-top: 12px;
+    margin-left: 200px;
+    border: none;
+    text-align: center;
+    border-radius: 8px;
+    background: #0099ff;
+    color: #fff;
+    font-size: 15px;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.payment-btn:hover {
+    background: #0077cc;
+    transform: scale(1.05);
+}
+
+.payment-btn:active {
+    transform: scale(0.98);
+}

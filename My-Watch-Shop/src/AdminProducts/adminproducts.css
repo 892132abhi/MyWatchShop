@@ -1,0 +1,155 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@700&display=swap');
+
+.admin-products-wrapper {
+    font-family: 'Inter', sans-serif;
+}
+
+.products-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #eee;
+}
+
+.header-text h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    margin: 0;
+}
+
+.header-text p {
+    font-size: 0.8rem;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.add-product-btn {
+    background: #1a1a1a;
+    color: #fff;
+    border: none;
+    padding: 12px 24px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.add-product-btn:hover {
+    background: #d4af37; /* Gold */
+}
+
+/* GRID & CARDS */
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 30px;
+}
+
+.product-admin-card {
+    background: #fff;
+    border: 1px solid #f0f0f0;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.product-admin-card:hover {
+    box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+    transform: translateY(-5px);
+}
+
+.image-wrapper {
+    position: relative;
+    background: #fcfcfc;
+    aspect-ratio: 1/1;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.image-wrapper img {
+    width: 80%;
+    height: 80%;
+    object-fit: contain;
+    transition: transform 0.5s ease;
+}
+
+/* OVERLAY ACTIONS */
+.card-overlay {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    opacity: 0;
+    transition: 0.3s;
+}
+
+.product-admin-card:hover .card-overlay {
+    opacity: 1;
+}
+
+.edit-icon-btn, .delete-icon-btn {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.edit-icon-btn { background: #fff; color: #1a1a1a; }
+.delete-icon-btn { background: #ff4d4d; color: #fff; }
+
+.edit-icon-btn:hover { transform: scale(1.1); background: #d4af37; color: white; }
+.delete-icon-btn:hover { transform: scale(1.1); background: #cc0000; }
+
+/* PRODUCT INFO */
+.product-info {
+    padding: 20px;
+    text-align: center;
+}
+
+.brand-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #d4af37;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.product-title {
+    font-size: 0.95rem;
+    font-weight: 500;
+    margin: 5px 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.product-price {
+    font-weight: 700;
+    color: #1a1a1a;
+    font-size: 1.1rem;
+    margin: 0;
+}
+
+.empty-state {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 100px;
+    color: #ccc;
+}
