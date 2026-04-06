@@ -5,6 +5,7 @@ from .models import Products,Cart,Wishlist
 from .Serializers import ProductSerializer
 from accounts.models import Users
 from rest_framework.permissions import IsAuthenticated
+from drf_spectacular.utils import extend_schema,OpenApiResponse,OpenApiParameter
 # Create your views here.
 
 class productsPage(APIView):
@@ -15,6 +16,25 @@ class productsPage(APIView):
     
 class AddCart(APIView):
     permission_classes = [IsAuthenticated]
+    @extend_schema(
+    tags=["Cart"],
+    summary="Add product to cart",
+    request={
+        "application/json": {
+            "type": "object",
+            "properties": {
+                "product_id": {"type": "integer"}
+            },
+            "required": ["product_id"]
+        }
+    },
+    responses={
+        200: OpenApiResponse(description="Quantity increased"),
+        201: OpenApiResponse(description="Product added"),
+        400: OpenApiResponse(description="Invalid request"),
+        404: OpenApiResponse(description="Product not found"),
+    }
+    )
     def post(self,request):
         user = request.user
         product_id=request.data.get('product_id')
@@ -62,6 +82,11 @@ class AddCart(APIView):
         },status=status.HTTP_201_CREATED)
 class Cartitems(APIView):
     permission_classes = [IsAuthenticated]
+    @extend_schema(
+    tags=["Cart"],
+    summary="Get cart items",
+    responses={200: OpenApiResponse(description="List of cart items")}
+)
     def get(self,request):
         user = request.user
         cart_items=Cart.objects.filter(user=user).select_related('product')
@@ -79,6 +104,25 @@ class Cartitems(APIView):
         return Response(data,status=status.HTTP_200_OK)
 class AddQuantity(APIView):
     permission_classes = [IsAuthenticated]
+    @extend_schema(
+    tags=["Cart"],
+    summary="Update cart quantity",
+    request={
+        "application/json": {
+            "type": "object",
+            "properties": {
+                "product_id": {"type": "integer"},
+                "quantity": {"type": "integer"}
+            },
+            "required": ["product_id", "quantity"]
+        }
+    },
+    responses={
+        200: OpenApiResponse(description="Quantity updated"),
+        400: OpenApiResponse(description="Invalid quantity"),
+        404: OpenApiResponse(description="Not found"),
+    }
+)
     def patch(self, request):
         user = request.user
 
@@ -132,6 +176,20 @@ class AddQuantity(APIView):
 
 class RemoveItem(APIView):
     permission_classes = [IsAuthenticated]
+    @extend_schema(
+    tags=["Cart"],
+    summary="Remove item from cart",
+    request={
+        "application/json": {
+            "type": "object",
+            "properties": {
+                "product_id": {"type": "integer"}
+            },
+            "required": ["product_id"]
+        }
+    },
+    responses={200: OpenApiResponse(description="Item removed")}
+)
     def post(self,request):
         user = request.user
         product_id = request.data.get('product_id')
@@ -161,6 +219,23 @@ class RemoveItem(APIView):
 
 class AddtoWishlist(APIView):
     permission_classes = [IsAuthenticated]
+    @extend_schema(
+    tags=["Wishlist"],
+    summary="Add or remove wishlist",
+    request={
+        "application/json": {
+            "type": "object",
+            "properties": {
+                "product_id": {"type": "integer"}
+            },
+            "required": ["product_id"]
+        }
+    },
+    responses={
+        200: OpenApiResponse(description="Removed from wishlist"),
+        201: OpenApiResponse(description="Added to wishlist"),
+    }
+)
     def post(self,request):
         print("CONTENT TYPE:", request.content_type)
         user = request.user
@@ -191,6 +266,11 @@ class AddtoWishlist(APIView):
 
 class WishlistItem(APIView):
     permission_classes = [IsAuthenticated]
+    @extend_schema(
+    tags=["Wishlist"],
+    summary="Get wishlist items",
+    responses={200: OpenApiResponse(description="Wishlist list")}
+)
     def get(self,request):
         user = request.user
         wishlist_items = Wishlist.objects.filter(user=user).select_related('product')
@@ -208,6 +288,20 @@ class WishlistItem(APIView):
     
 class RemoveWishItem(APIView):
     permission_classes=[IsAuthenticated]
+    @extend_schema(
+    tags=["Wishlist"],
+    summary="Remove wishlist item",
+    request={
+        "application/json": {
+            "type": "object",
+            "properties": {
+                "product_id": {"type": "integer"}
+            },
+            "required": ["product_id"]
+        }
+    },
+    responses={200: OpenApiResponse(description="Removed")}
+)
     def delete(self,request):
         user = request.user
         product_id=request.data.get('product_id')
@@ -234,6 +328,11 @@ class RemoveWishItem(APIView):
         
 class CartCount(APIView):
     permission_classes = [IsAuthenticated]
+    @extend_schema(
+    tags=["Cart"],
+    summary="Get cart count",
+    responses={200: OpenApiResponse(description="Cart count")}
+)
     def get(self,request):
         user = request.user
         cart_count = Cart.objects.filter(user=user).count()
@@ -243,6 +342,11 @@ class CartCount(APIView):
         
 class WishCount(APIView):
     permission_classes=[IsAuthenticated]
+    @extend_schema(
+    tags=["Wishlist"],
+    summary="Get wishlist count",
+    responses={200: OpenApiResponse(description="Wishlist count")}
+)
     def get(self,request):
         user = request.user
         wish_count = Wishlist.objects.filter(user=user).count()
@@ -252,6 +356,14 @@ class WishCount(APIView):
         
 class ProductView(APIView):
     permission_classes=[IsAuthenticated]
+    @extend_schema(
+    tags=["Products"],
+    summary="Get single product",
+    parameters=[
+        OpenApiParameter(name="id", type=int, location=OpenApiParameter.PATH)
+    ],
+    responses={200: ProductSerializer}
+)
     def get(self,request,id):
         try:
             product = Products.objects.get(id=id)

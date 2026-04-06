@@ -6,9 +6,17 @@ from payment.models import Payments
 from .serializers import OrderListSerializer
 from rest_framework.permissions import IsAdminUser
 from wallet.models import Wallet, WalletTransaction
+from drf_spectacular.utils import extend_schema,OpenApiResponse,OpenApiParameter
 
 
 class OrderList(APIView):
+    permission_classes=[IsAdminUser]
+    @extend_schema(
+        tags=["Admin Orders"],
+        summary="Get all orders",
+        description="Returns all payment orders for admin panel.",
+        responses={200: OrderListSerializer(many=True)},
+    )
     def get(self, request):
         orders = Payments.objects.select_related("user", "order").all().order_by("-created_at")
         serializer = OrderListSerializer(orders, many=True)
@@ -17,6 +25,36 @@ class OrderList(APIView):
 
 class StatusUpdate(APIView):
     permission_classes = [IsAdminUser]
+    @extend_schema(
+        tags=["Admin Orders"],
+        summary="Update order status",
+        description="Update payment status of a specific order by payment ID.",
+        parameters=[
+            OpenApiParameter(
+                name="id",
+                type=int,
+                location=OpenApiParameter.PATH,
+                description="Payment ID"
+            )
+        ],
+        request={
+            "application/json": {
+                "type": "object",
+                "properties": {
+                    "new_status": {
+                        "type": "string",
+                        "example": "refunded"
+                    }
+                },
+                "required": ["new_status"]
+            }
+        },
+        responses={
+            200: OpenApiResponse(description="Order status updated successfully"),
+            400: OpenApiResponse(description="Status is required"),
+            404: OpenApiResponse(description="Order does not exist"),
+        },
+    )
     def patch(self,request,id):
         try:
             order = Payments.objects.get(id=id)

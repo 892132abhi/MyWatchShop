@@ -5,10 +5,23 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAdminUser 
 from products.models import Products 
 from .serializers import ProductSerializer
+from drf_spectacular.utils import extend_schema,OpenApiParameter,OpenApiResponse
 
 # Create your views here.
 class SingleProduct(APIView):
     permission_classes=[IsAdminUser]
+    @extend_schema(
+        tags=["Admin Products"],
+        summary="Get single product",
+        description="Retrieve one product by its ID.",
+        parameters=[
+            OpenApiParameter(name="id", type=int, location=OpenApiParameter.PATH, description="Product ID")
+        ],
+        responses={
+            200: ProductSerializer,
+            400: OpenApiResponse(description="Product does not exist"),
+        },
+    )
     def get(self,request,id):
         try:
             product = Products.objects.get(id=id)
@@ -20,6 +33,18 @@ class SingleProduct(APIView):
         return Response(serializer.data,status=status.HTTP_200_OK)
 class DeleteProduct(APIView):
     permission_classes=[IsAdminUser]
+    @extend_schema(
+        tags=["Admin Products"],
+        summary="Delete product",
+        description="Delete a product by its ID.",
+        parameters=[
+            OpenApiParameter(name="id", type=int, location=OpenApiParameter.PATH, description="Product ID")
+        ],
+        responses={
+            200: OpenApiResponse(description="Product deleted successfully"),
+            400: OpenApiResponse(description="Product does not exist"),
+        },
+    )
     def delete(self,request,id):
         try:
             product = Products.objects.get(id=id)
@@ -35,6 +60,16 @@ class DeleteProduct(APIView):
 class AddProducts(APIView):
     permission_classes = [IsAdminUser]
     serializer_class = ProductSerializer
+    @extend_schema(
+        tags=["Admin Products"],
+        summary="Add product",
+        description="Create a new product.",
+        request=ProductSerializer,
+        responses={
+            201: OpenApiResponse(description="Product added successfully"),
+            400: OpenApiResponse(description="Validation failed"),
+        },
+    )
     def post(self,request):
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
@@ -46,6 +81,19 @@ class AddProducts(APIView):
     
 class EditProducts(APIView):
     permission_classes =[IsAdminUser]
+    @extend_schema(
+        tags=["Admin Products"],
+        summary="Edit product",
+        description="Update an existing product by its ID.",
+        parameters=[
+            OpenApiParameter(name="id", type=int, location=OpenApiParameter.PATH, description="Product ID")
+        ],
+        request=ProductSerializer,
+        responses={
+            200: OpenApiResponse(description="Product modified successfully"),
+            400: OpenApiResponse(description="Product does not exist or validation failed"),
+        },
+    )
     def put(self,request,id):
         try:
             product = Products.objects.get(id=id)

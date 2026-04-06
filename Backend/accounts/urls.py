@@ -1,6 +1,7 @@
 from django.urls import path
 from .import views
 from rest_framework_simplejwt.views import TokenRefreshView
+from drf_spectacular.views import SpectacularAPIView,SpectacularSwaggerView
 
 urlpatterns=[
     path('register/',views.RegisterPage.as_view(),name='register'),
@@ -10,5 +11,7 @@ urlpatterns=[
     path('profile/',views.Profiles.as_view(),name="profile"),
     path('adminlogin/',views.AdminLogin.as_view(),name='adminlogin'),
     path('userlist/',views.UserList.as_view(),name='user-list'),
-    path('users/block/<str:email>/',views.blockUser.as_view(),name='block-user')
+    path('users/block/<str:email>/',views.blockUser.as_view(),name='block-user'),
+    path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
+    path('api/docs/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
 ]

@@ -12,11 +12,20 @@ from .models import Order, OrderItem, Payments
 from .serializers import PlaceOrderSerializer, OrderItemSerializer
 from products.models import Cart
 from wallet.models import Wallet,WalletTransaction
-
+from drf_spectacular.utils import extend_schema,OpenApiResponse
 
 class PlaceOrder(APIView):
     permission_classes = [IsAuthenticated]
-
+    @extend_schema(
+        tags=["Orders"],
+        summary="Place order",
+        description="Create order with COD / Online / Wallet",
+        request=PlaceOrderSerializer,
+        responses={
+            201: OpenApiResponse(description="Order created"),
+            400: OpenApiResponse(description="Invalid request"),
+        },
+    )
     @transaction.atomic
     def post(self, request):
         serializer = PlaceOrderSerializer(data=request.data)
@@ -151,7 +160,33 @@ class PlaceOrder(APIView):
         
 class VerifyPayment(APIView):
     permission_classes = [IsAuthenticated]
-
+    @extend_schema(
+        tags=["Payments"],
+        summary="Verify Razorpay payment",
+        description="Verify Razorpay payment signature and complete order",
+        request={
+            "application/json": {
+                "type": "object",
+                "properties": {
+                    "razorpay_order_id": {"type": "string"},
+                    "razorpay_payment_id": {"type": "string"},
+                    "razorpay_signature": {"type": "string"},
+                    "order_id": {"type": "integer"},
+                },
+                "required": [
+                    "razorpay_order_id",
+                    "razorpay_payment_id",
+                    "razorpay_signature",
+                    "order_id"
+                ]
+            }
+        },
+        responses={
+            200: OpenApiResponse(description="Payment verified"),
+            400: OpenApiResponse(description="Verification failed"),
+            404: OpenApiResponse(description="Payment not found"),
+        },
+    )
     @transaction.atomic
     def post(self, request):
         razorpay_order_id = request.data.get("razorpay_order_id")
@@ -222,6 +257,12 @@ class VerifyPayment(APIView):
         )
 class OrderedItems(APIView):
     permission_classes = [IsAuthenticated]
+    @extend_schema(
+        tags=["Orders"],
+        summary="Get ordered items",
+        description="Returns all ordered items of logged-in user",
+        responses={200: OrderItemSerializer(many=True)},
+    )
 
     def get(self, request):
         user = request.user

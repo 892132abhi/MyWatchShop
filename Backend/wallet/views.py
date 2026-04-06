@@ -7,10 +7,16 @@ from rest_framework.permissions import IsAuthenticated
 
 from .models import Wallet, WalletTransaction
 from .serializer import WalletSerializer
+from drf_spectacular.utils import extend_schema
 
 class WalletDetail(APIView):
     permission_classes = [IsAuthenticated]
-
+    @extend_schema(
+        tags=["Wallet"],
+        summary="Get wallet details",
+        description="Returns the wallet details of the logged-in user.",
+        responses={200: WalletSerializer},
+    )
     def get(self, request):
         wallet, created = Wallet.objects.get_or_create(user=request.user)
         serializer = WalletSerializer(wallet)

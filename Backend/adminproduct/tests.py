@@ -1,15 +1,27 @@
-from django.test import TestCase
-
-# Create your tests here.
+from io import BytesIO
 from unittest.mock import MagicMock, patch
 
+from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import TestCase
+from PIL import Image
 from rest_framework import status
 from rest_framework.test import APIRequestFactory, force_authenticate
 
 from accounts.models import Users
 from products.models import Products
 from .views import SingleProduct, DeleteProduct, AddProducts, EditProducts
+
+
+def get_test_image():
+    file = BytesIO()
+    image = Image.new("RGB", (100, 100), "white")
+    image.save(file, "jpeg")
+    file.seek(0)
+    return SimpleUploadedFile(
+        "test.jpg",
+        file.read(),
+        content_type="image/jpeg"
+    )
 
 
 class AdminProductViewTests(TestCase):
@@ -41,7 +53,7 @@ class AdminProductViewTests(TestCase):
             type="Luxury",
             description="Luxury watch",
             quantity=10,
-            image="watch.jpg",
+            image=get_test_image(),
         )
 
     def test_single_product_success(self):
@@ -96,12 +108,7 @@ class AdminProductViewTests(TestCase):
 
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
-    @patch("adminproduct.views.ProductSerializer")
-    def test_add_product_success(self, mock_serializer_class):
-        mock_serializer = MagicMock()
-        mock_serializer.is_valid.return_value = True
-        mock_serializer_class.return_value = mock_serializer
-
+    def test_add_product_success(self):
         payload = {
             "name": "Casio",
             "price": 2000,
@@ -109,23 +116,25 @@ class AdminProductViewTests(TestCase):
             "type": "Sports",
             "description": "Good watch",
             "quantity": 5,
-            "image": "watch2.jpg",
+            "image": get_test_image(),
         }
 
-        request = self.factory.post("/product/add/", payload, format="json")
+        request = self.factory.post("/product/add/", payload, format="multipart")
         force_authenticate(request, user=self.admin)
         response = AddProducts.as_view()(request)
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(response.data["message"], "Product added successfully")
-        mock_serializer.is_valid.assert_called_once()
-        mock_serializer.save.assert_called_once()
+        self.assertTrue(Products.objects.filter(name="Casio").exists())
 
     @patch("adminproduct.views.ProductSerializer")
     def test_add_product_invalid_data(self, mock_serializer_class):
         mock_serializer = MagicMock()
         mock_serializer.is_valid.return_value = False
-        mock_serializer.errors = {"name": ["This field is required."]}
+        mock_serializer.errors = {
+            "name": ["This field is required."],
+            "price": ["This field is required."],
+        }
         mock_serializer_class.return_value = mock_serializer
 
         request = self.factory.post("/product/add/", {}, format="json")
@@ -133,7 +142,8 @@ class AdminProductViewTests(TestCase):
         response = AddProducts.as_view()(request)
 
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-        self.assertEqual(response.data, {"name": ["This field is required."]})
+        self.assertIn("name", response.data)
+        self.assertEqual(str(response.data["name"][0]), "This field is required.")
 
     def test_add_product_non_admin_forbidden(self):
         request = self.factory.post("/product/add/", {}, format="json")
@@ -194,7 +204,8 @@ class AdminProductViewTests(TestCase):
         response = EditProducts.as_view()(request, id=self.product.id)
 
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-        self.assertEqual(response.data, {"price": ["A valid integer is required."]})
+        self.assertIn("price", response.data)
+        self.assertEqual(str(response.data["price"][0]), "A valid integer is required.")
 
     def test_edit_product_non_admin_forbidden(self):
         request = self.factory.put(

@@ -243,6 +243,7 @@ class ProductViewTests(TestCase):
         response = AddQuantity.as_view()(request)
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data["message"], "Inventory Synced")
         self.assertEqual(response.data["quantity"], 1)
 
         cart_item = Cart.objects.get(user=self.user, product=self.product1)
@@ -279,7 +280,7 @@ class ProductViewTests(TestCase):
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(response.data["message"], "Quantity must be at least 1")
 
-    def test_add_quantity_record_not_found(self):
+    def test_add_quantity_product_not_found(self):
         request = self.factory.patch(
             "/products/addquantity/",
             {"product_id": 999, "quantity": 2},
@@ -288,8 +289,20 @@ class ProductViewTests(TestCase):
         force_authenticate(request, user=self.user)
         response = AddQuantity.as_view()(request)
 
-        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
-        self.assertEqual(response.data["message"], "Record not found")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data["message"], "Product not found")
+
+    def test_add_quantity_cart_item_not_found(self):
+        request = self.factory.patch(
+            "/products/addquantity/",
+            {"product_id": self.product1.id, "quantity": 2},
+            format="json",
+        )
+        force_authenticate(request, user=self.user)
+        response = AddQuantity.as_view()(request)
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data["message"], "Cart item not found")
 
     def test_add_quantity_not_enough_stock(self):
         Cart.objects.create(user=self.user, product=self.product1, quantity=1)

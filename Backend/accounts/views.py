@@ -19,6 +19,7 @@ from django.contrib.auth.tokens import default_token_generator
 from django.http import HttpResponse
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.permissions import IsAuthenticated,IsAdminUser
+from drf_spectacular.utils import extend_schema
 
 
 class RegisterPage(APIView):
@@ -137,6 +138,11 @@ class UserList(APIView):
     
 class blockUser(APIView):
     permission_classes=[IsAdminUser]
+    @extend_schema(
+        tags=["Admin"],
+        summary="Block/Unblock user",
+        description="Update user active status using email",
+    )
     def patch(self,request,email):
         user_status = request.data.get('is_active')
         if  user_status is None:

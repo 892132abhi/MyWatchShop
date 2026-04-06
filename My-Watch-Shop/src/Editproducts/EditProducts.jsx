@@ -78,7 +78,7 @@ export default function EditProducts() {
       if (images) formData.append("image", images);
 
       await axiosInstance.put(`admin/products/editproduct/${id}/`, formData, {
-        // headers: { "Content-Type": "multipart/form-data" },
+        headers: { "Content-Type": "multipart/form-data" },
       });
 
       await Swal.fire("Updated", "Product updated successfully", "success");
