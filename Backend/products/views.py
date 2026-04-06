@@ -5,7 +5,6 @@ from .models import Products,Cart,Wishlist
 from .Serializers import ProductSerializer
 from accounts.models import Users
 from rest_framework.permissions import IsAuthenticated
-import json
 # Create your views here.
 
 class productsPage(APIView):
@@ -83,16 +82,8 @@ class AddQuantity(APIView):
     def patch(self, request):
         user = request.user
         print("CONTENT TYPE:", request.content_type)
-        if request.content_type == 'text/plain':
-            try:
-                payload = json.loads(request.body.decode('utf-8'))
-            except (json.JSONDecodeError, UnicodeDecodeError):
-                return Response({"message": "Invalid request body"}, status=status.HTTP_400_BAD_REQUEST)
-        else:
-            payload = request.data
-
-        product_id = payload.get('product_id')
-        new_quantity = payload.get('quantity')
+        product_id = request.data.get('product_id')
+        new_quantity = request.data.get('quantity')
 
         try:
             target_qty = int(new_quantity)
