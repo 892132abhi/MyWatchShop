@@ -17,8 +17,7 @@ class OrderList(APIView):
 
 class StatusUpdate(APIView):
     permission_classes = [IsAdminUser]
-
-    def patch(self, request, id):
+    def patch(self,request,id):
         try:
             order = Payments.objects.get(id=id)
         except Payments.DoesNotExist:
@@ -27,7 +26,7 @@ class StatusUpdate(APIView):
                 status=status.HTTP_404_NOT_FOUND
             )
 
-        new_status = request.data.get("status")
+        new_status = request.data.get("new_status")
         if not new_status:
             return Response(
                 {"message": "Status is Required"},

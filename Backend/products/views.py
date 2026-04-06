@@ -81,7 +81,7 @@ class AddQuantity(APIView):
     permission_classes = [IsAuthenticated]
     def patch(self, request):
         user = request.user
-        print("CONTENT TYPE:", request.content_type)
+
         product_id = request.data.get('product_id')
         new_quantity = request.data.get('quantity')
 

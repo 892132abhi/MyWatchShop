@@ -34,8 +34,9 @@ class DeleteProduct(APIView):
         
 class AddProducts(APIView):
     permission_classes = [IsAdminUser]
+    serializer_class = ProductSerializer
     def post(self,request):
-        serializer = ProductSerializer(data=request.data)
+        serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response({

@@ -21,7 +21,7 @@ export default function OrderDetails() {
     const updatestatus=async(id,status)=>{
       try{
          await axiosInstance.patch(`orderlist/update/status/${id}/`,{
-        status:status
+        new_status:status
       })
       setOrders((prev)=>
       prev.map((item)=>

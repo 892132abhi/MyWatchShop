@@ -22,8 +22,9 @@ from rest_framework.permissions import IsAuthenticated,IsAdminUser
 
 
 class RegisterPage(APIView):
+    serializer_class = RegisterSerializer
     def post(self, request):
-        serializer = RegisterSerializer(data=request.data)
+        serializer = self.serializer_class(data=request.data)
 
         if serializer.is_valid():
             user = serializer.save()
@@ -83,7 +84,7 @@ def activate_account(request, uidb64, token):
 class LoginPage(APIView):
     serializer_class = LoginSerializer
     def post(self,request):
-        serializer = LoginSerializer(data=request.data)
+        serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
             user = serializer.validated_data['user']
             refresh=RefreshToken.for_user(user)
@@ -111,8 +112,9 @@ class Profiles(APIView):
         })
         
 class AdminLogin(APIView):
+    serializer_class = AdminSerializer
     def post(self,request):
-        serializer = AdminSerializer(data=request.data)
+        serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
             admin = serializer.validated_data["user"]
             refresh = RefreshToken.for_user(admin)
