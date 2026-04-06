@@ -24,7 +24,7 @@ function App() {
 
   return (
     <>
-   <ToastContainer position='top-right' autoClose={2000}/>
+   <ToastContainer  autoClose={2000}/>
     <Routes>
     <Route element={<Navbar/>}>
     <Route path='/' element={<Home />}/>

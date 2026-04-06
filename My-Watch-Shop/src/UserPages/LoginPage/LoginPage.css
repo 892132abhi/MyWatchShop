@@ -5,7 +5,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #f4f1ea; /* Bone/Parchment white */
+    background-color: #f4f1ea;
     font-family: 'Montserrat', sans-serif;
 }
 
@@ -14,7 +14,7 @@
     padding: 60px 40px;
     width: 100%;
     max-width: 450px;
-    border: 1px solid #d1cfc7; /* Subtle stone border */
+    border: 1px solid #d1cfc7; 
     text-align: center;
     box-shadow: 0 10px 30px rgba(0,0,0,0.05);
 }
@@ -54,7 +54,7 @@
     width: 100%;
     padding: 12px 0;
     border: none;
-    border-bottom: 1px solid #ccc; /* Underline style input */
+    border-bottom: 1px solid #ccc;
     border-radius: 0;
     font-size: 1rem;
     color: #333;
@@ -67,11 +67,10 @@
     border-bottom: 1px solid #1a1a1a;
 }
 
-/* Classic Button */
 .login-btn {
     width: 100%;
     padding: 15px;
-    background-color: #1a1a1a; /* Pitch Black */
+    background-color: #1a1a1a; 
     color: #fff;
     border: 1px solid #1a1a1a;
     font-family: 'Montserrat', sans-serif;

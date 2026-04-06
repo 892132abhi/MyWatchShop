@@ -1,107 +1,119 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
-import './ProductDetail.css'; // Import the new CSS
-
+import "./ProductDetail.css";
+import axiosInstance from "../../api/axiosInstance";
+import { AppContext } from "../../AppProvider/APPContext";
+import { toast } from "react-toastify";
 export default function ProductsDetails() {
   const [items, setItems] = useState(null);
   const navigate = useNavigate();
   const { id } = useParams();
-  const log = JSON.parse(localStorage.getItem("loggeduser"));
+  const token = localStorage.getItem("access");
+  const { fetchCounts } = useContext(AppContext);
 
   useEffect(() => {
-    if (!log) {
+    if (!token) {
       Swal.fire({
         title: "Access Denied",
         text: "Please sign in to view details.",
         icon: "warning",
         confirmButtonColor: "#d4af37",
-      });
-      navigate("/login");
+      }).then(() => navigate("/login"));
       return;
     }
 
     const checkStatus = async () => {
       try {
-        const res = await axios.get(`http://localhost:3000/users/${log.id}`);
-        if (!res.data.active) {
+        const res = await axiosInstance.get("/profile/");
+        if (!res.data.is_active) {
           Swal.fire({
             title: "Account Restricted",
             text: "Your account has been disabled by admin.",
             icon: "error",
+          }).then(() => {
+            localStorage.removeItem("access");
+            localStorage.removeItem("refresh");
+            localStorage.removeItem("loggeduser");
+            navigate("/login");
           });
-          navigate("/login");
         }
-      } catch (err) { console.error(err); }
+      } catch (err) {
+        console.error(err.response?.data || err.message);
+      }
     };
 
     checkStatus();
-    const interval = setInterval(checkStatus, 5000); // Check every 5s instead of 1.5s for performance
-    return () => clearInterval(interval);
-  }, [id, log, navigate]);
+  }, [token, navigate]);
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await axios.get(`http://localhost:3000/products/${id}`);
-      setItems(res.data);
+      try {
+        const res = await axiosInstance.get(`products/productview/${id}/`);
+        setItems(res.data);
+      } catch (err) {
+        console.log(err.response?.data || err.message);
+      }
     };
+
     fetchData();
   }, [id]);
 
-  if (!items) return <div className="loading-state">Refining details...</div>;
-
   const Purchase = async (item) => {
     try {
-      const res = await axios.get(`http://localhost:3000/users/${log.id}`);
-      const currentuser = res.data;
-      const alreadyincart = currentuser.cart.some((cartitem) => cartitem.id === item.id);
+      const res = await axiosInstance.post("products/cart/add/", {
+        product_id: item.id,
+      });
 
-      if (alreadyincart) {
-        Swal.fire({
-          title: "Already in Collection",
-          text: "This piece is already in your cart.",
-          icon: "info",
-          confirmButtonColor: "#d4af37",
-        });
-      } else {
-        await axios.patch(`http://localhost:3000/users/${log.id}`, {
-          cart: [...currentuser.cart, item],
-        });
-        Swal.fire({
-          title: "Added to Cart",
-          text: `${item.brand} has been added to your selection.`,
-          icon: "success",
-          confirmButtonColor: "#1a1a1a",
-        });
-      }
-    } catch (err) { console.log("Error", err); }
+      fetchCounts();
+
+      Swal.fire({
+        title: "Added to Cart",
+        text: res.data.message || `${item.brand} has been added to your selection.`,
+        icon: "success",
+        confirmButtonColor: "#1a1a1a",
+      });
+      if (res.data.message=="Product quantity increased"){
+            toast.success("Product quantity increased",{
+              position:"top-left",
+              autoClose:1000,
+      });
+    }
+    } catch (err) {
+      Swal.fire({
+        title: "Error",
+        text: err.response?.data?.message || "Unable to add item to cart.",
+        icon: "error",
+        confirmButtonColor: "#d4af37",
+      });
+    }
   };
+
+  if (!items) return <div className="loading-state">please wait...</div>;
 
   return (
     <div className="details-container">
       <div className="details-card">
-        {/* Left Side: Image */}
         <div className="details-image-section">
           <img src={items.image} alt={items.name} />
         </div>
 
-        {/* Right Side: Content */}
         <div className="details-info-section">
           <div className="brand-badge">Premium Collection</div>
           <h1 className="details-brand">{items.brand}</h1>
           <h2 className="details-description">{items.description}</h2>
-          
+
           <div className="details-price">
             <span className="currency">₹</span>
             {items.price.toLocaleString()}
           </div>
-
           <div className="details-actions">
             <button className="add-to-cart-btn" onClick={() => Purchase(items)}>
               Add to selection
             </button>
-            <p className="shipping-info">Complimentary Standard Shipping & Returns</p>
+            <p className="shipping-info">
+              Complimentary Standard Shipping & Returns
+            </p>
           </div>
         </div>
       </div>

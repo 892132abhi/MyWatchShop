@@ -133,3 +133,45 @@ html, body {
 .text-center {
     text-align: center;
 }
+.status-select {
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid #e5e5e5;
+  font-size: 12px;
+  font-weight: 600;
+  outline: none;
+  cursor: pointer;
+  background-color: #fff;
+  transition: all 0.3s ease;
+}
+
+/* Hover effect */
+.status-select:hover {
+  border-color: #d4af37;
+}
+
+/* Status colors */
+
+.status-select.pending {
+  background-color: #fff8e6;
+  color: #b88900;
+  border-color: #f3e2a9;
+}
+
+.status-select.completed {
+  background-color: #eaf7ee;
+  color: #1f7a3d;
+  border-color: #cce7d3;
+}
+
+.status-select.failed {
+  background-color: #fdecec;
+  color: #c0392b;
+  border-color: #f5c6c6;
+}
+
+.status-select.refunded {
+  background-color: #eef3ff;
+  color: #355cbd;
+  border-color: #cfdcff;
+}

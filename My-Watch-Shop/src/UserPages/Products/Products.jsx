@@ -1,11 +1,12 @@
-import axios from "axios";
 import "./Products.css";
 import { useNavigate } from "react-router-dom";
-import {  useState, useEffect } from "react";
+import {  useState, useEffect,useContext } from "react";
 import Swal from "sweetalert2";
 import { Funnel, Undo2, Heart, Scale, View } from "lucide-react";
 import "animate.css"
 import { toast } from "react-toastify";
+import axiosInstance from "../../api/axiosInstance";
+import { AppContext } from "../../AppProvider/APPContext";
 export default function Products() {
   const navigate = useNavigate();
   const [watches, setWatches] = useState([]);
@@ -16,22 +17,22 @@ export default function Products() {
   const [search,setSearch] = useState("")
   const [isBrandOpen, setIsBrandOpen] = useState(false);
   const [isTypeOpen, setIsTypeOpen] = useState(false);
-  useEffect(()=>{
-    let interval;
+  const { fetchCounts } =useContext(AppContext)
+useEffect(()=>{
    const fetch=async()=>{
 
-const user = JSON.parse(localStorage.getItem("loggeduser"))
-const Data = await axios.get(`http://localhost:3000/users/${user.id}`)
-const res= Data.data
+const token = localStorage.getItem('access')
 
-if(!res.active){
+if(!token){
   Swal.fire({
-    title:"Admin blocked you",
+    title:"please login",
     icon:"error",
     showConfirmButton:false
   })
   .then(()=>{
     localStorage.removeItem("loggeduser")
+    localStorage.removeItem('access')
+    localStorage.removeItem('refresh')
     navigate("/")
     window.location.reload()
   })
@@ -39,25 +40,24 @@ if(!res.active){
     }
     fetch()
   
-  interval = setInterval(fetch,1500);
-  return()=>clearInterval(interval)
-  },[])
+},[])
 
-  useEffect(()=>{
-    const getData=async()=>{
-    const user = JSON.parse(localStorage.getItem("loggeduser"))
-    if(user){
-        const Data = await axios.get(`http://localhost:3000/users/${user.id}`)
-        const res = Data.data.wishlist
-        setWishlists(res)
-    }
+useEffect(()=>{
+const getData=async()=>{
+const token = localStorage.getItem('access')
+if (!token) return ;
+try{
+const res = await axiosInstance.get("products/wishlist/");
+setWishlists(res.data)
+}catch(err){
+  console.log("error found",err.response?.data||err.message)
+}
 }
 getData()
 },[])
   useEffect(() => {
     try{
-    axios
-      .get("http://localhost:3000/products")
+    axiosInstance.get("products/")
       .then((res) => {
         setWatches(res.data);
         setAllWatches(res.data);
@@ -69,83 +69,60 @@ console.log("error found",err)
 }, []);
 
   const ADDcart = async (item) => {
-
-    
+  const token = localStorage.getItem('access')
+    console.log("token",token)
+  if (!token){
+    Swal.fire({
+      icon:"error",
+      text:"please login ",
+      showConfirmButton:false
+    })
+    return ;
+  }
     try{
-const loggeduser = JSON.parse(localStorage.getItem("loggeduser"));
-
-    if (!loggeduser) {
-      Swal.fire({
-        title: " please login...",
-        icon: "warning",
-        timer: 1500,
-        showConfirmButton: false,
+      const res = await axiosInstance.post("products/cart/add/",{
+        product_id:item.id
       })
+      const updatestock = res.data.stock;
+      setWatches((prev) =>
+  prev.map((watch) =>
+    watch.id === item.id ? { ...watch, quantity: updatestock } : watch
+  )
+);
+     setAllWatches((prev) =>
+  prev.map((watch) =>
+    watch.id === item.id ? { ...watch, quantity: updatestock } : watch
+  )
+);
 
-      return;
-    }
-    if(!loggeduser.active){
-      Swal.fire({
-        title:"Admin blocked You!!!",
-        icon:"error",
-        draggable:false,
-        showConfirmButton:true
-      })
-      return
-    }
-    else{
-    try {
-
-      const res = await axios.get(`http://localhost:3000/users/${loggeduser.id}`);
-      const currentuser = res.data;
-      if(!currentuser.active){
-        Swal.fire({
-        title:"Admin blocked You!!!",
-        icon:"error",
-        draggable:false,
-        showConfirmButton:true
-        })
-        return
+      fetchCounts();
+    if (res.data.message=="Product quantity increased"){
+      toast.success("Product quantity increased ",{
+        position:"top-left",
+        autoClose:1000,
       }
-      const alreadyincart = currentuser.cart.some((cartitem) => cartitem.id === item.id)
-      if (alreadyincart) {
-        const updateqantity = currentuser.cart.map((cartitem)=>cartitem.id ===item.id? {...cartitem,quantity:cartitem.quantity+1}:cartitem )
-        await axios .patch(`http://localhost:3000/users/${loggeduser.id}`,{
-          cart:updateqantity
-        })
-        loggeduser.cart = updateqantity
-        localStorage.setItem("loggeduser",JSON.stringify(loggeduser))
-        toast.success("Quantity Increased...",{
-          autoClose:1100
-        })
+    )
        
-      }
-      else {
-        const updateCart = [...currentuser.cart, item];
-        await axios.patch(`http://localhost:3000/users/${loggeduser.id}`, {
-          cart: updateCart,
-        });
-        Swal.fire({
-          title: `${item.name} added to cart!`,
-          icon: "success",
-          draggable: true,
-          showConfirmButton: true,
-        })
-
-
-
-
-      }
-
-    } catch (err) {
-      console.log("Error found", err);
+    }else{
+      Swal.fire({
+        icon:"success",
+        text:res.data.message || "Product added to cart ",
+        showConfirmButton:true
+      })
     }
-  }
+     
+    }catch(err){
+      console.log("error found :",err.response?.data||err.message);
+      if (err.response?.status === 400) {
+      Swal.fire("Wait!", err.response.data.message, "warning");
+    }
+      if(err.response?.status===401){
+        localStorage.removeItem('access')
+        localStorage.removeItem('refresh')
+        navigate('/login')
+      }
+    }
   
-  }catch(err){
-    console.log("error found",err)
-  }
-
   };
 
   const types = [...new Set(allWatches.map((item) => item.type))];
@@ -169,9 +146,8 @@ const loggeduser = JSON.parse(localStorage.getItem("loggeduser"));
   }
 }, [selectedType, selectedBrand, allWatches,search]);
   const Addwishlist = async (item) => {
-    try{
-    const user = JSON.parse(localStorage.getItem("loggeduser"))
-    if (!user) {
+    const token = localStorage.getItem("access")
+    if (!token) {
       Swal.fire({
         title: "Please Login...!",
         icon: "warning",
@@ -179,49 +155,36 @@ const loggeduser = JSON.parse(localStorage.getItem("loggeduser"));
         showConfirmButton: false
       })
       return
-      
-    } else {
-      
-      const Data = await axios.get(`http://localhost:3000/users/${user.id}`)
-      const res = Data.data.wishlist || []
-      if(!Data.data.active){ 
-        Swal.fire({
-        title:"Admin blocked You!!!",
-        icon:"error",
-        draggable:false,
-        showConfirmButton:true
-        })
-      }
-      else{
-      setWishlists(res)
-      const exists = res.find((w) => w.id === item.id)
-      let Datas
-      
-      if (exists) {
-         Datas = res.filter((i)=> i.id !==item.id)
-        setWishlists(Datas)
-         await axios.patch(`http://localhost:3000/users/${user.id}`,{
-          wishlist :Datas
-        })
-        return
-      }
-      else {
-         Datas = [...res, item]
-         setWishlists(Datas)
-        await axios.patch(`http://localhost:3000/users/${user.id}`, {
-          wishlist: Datas,
-          
-        })
-      }
-     
-      
-        return
+    }
+    try{
+       
+      const res = await axiosInstance.post("products/wishlist/add/",{
+        product_id:item.id
+      })
+      fetchCounts();
+       Swal.fire({
+      title: res.data.message,
+      icon: "success",
+      showConfirmButton: false,
+      timer: 1200,
+    });
+    if(res.data.message=="Added to Wishlist"){
+      setWishlists((prev)=>[...prev,{product_id:item.id}])
+    }else if(res.data.message=='Removed From Wishlist'){
+      setWishlists((prev)=>prev.filter((w)=>w.product_id!==item.id)
+    );
     }
     }
-  }catch(err){
-    console.log("error found",err)
+  catch(err){
+    console.log("error found",err.response?.data||err.message)
+    if (err.response?.status === 401) {
+      localStorage.removeItem("access");
+      localStorage.removeItem("refresh");
+      navigate("/login");
+    }
   }
   }
+
 
   return (
     <>
@@ -267,13 +230,13 @@ const loggeduser = JSON.parse(localStorage.getItem("loggeduser"));
   </button>
 </div>
 
-      <div className="productdiv animate__animated animate__bounceInLeft">
+      <div className="productdiv animate__animated animate__fadeIn">
         {watches.map((item, index) => (
           
-          <div key={index} className="product-card " 
+          <div key={index} className="product-card animate__animated animate__fadeIn" 
             style={{ cursor: "pointer" }}><div style={{ textAlign: "end", transform: "Scale(1.05)", color: "blue"}}
-            ><Heart color={wishlists.some((w)=>w.id===item.id)?"rgb(37, 163, 208)":"grey"}
-            fill={wishlists.some((w)=>w.id===item.id)?"rgb(37, 163, 208)":"none"} onClick={(e) =>{e.stopPropagation(); Addwishlist(item)}}/></div>
+            ><Heart color={wishlists.some((w) => (w.product_id || w.id) === item.id)?"#333333":"grey"}
+            fill={wishlists.some((w) => (w.product_id || w.id) === item.id)?"#333333":"none"} onClick={(e) =>{e.stopPropagation(); Addwishlist(item)}}/></div>
             <div
            >
             {item.image && (
@@ -291,15 +254,28 @@ const loggeduser = JSON.parse(localStorage.getItem("loggeduser"));
             <p className ="pricep" style={{fontSize:"25px"}}>₹{(item.price).toLocaleString()}</p>
             
             
-
-             <button
+              {item.quantity<1?(
+                <>
+                <button
+                disabled
+              onClick={(e) =>{e.stopPropagation()}}
+              style={{ borderRadius: "10px", marginTop: "5px",color:"red"}}
+            >
+              Out Of Stock
+            </button>
+                </>
+              ):(
+                <>
+              <button
               onClick={(e) =>{e.stopPropagation(); ADDcart(item)}}
               style={{ borderRadius: "10px", marginTop: "5px" }}
             >
               Add to Cart
             </button>
+              </>
+              )}
+             
               
-
             </div>
             
           </div>

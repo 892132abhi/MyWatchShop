@@ -1,51 +1,70 @@
-import axios from "axios";
-import { MoveLeft } from "lucide-react"; // More "Luxury" back icon
+import { MoveLeft } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import './adminlog.css';
+import "./adminlog.css";
+import axiosInstance from "../api/axiosInstance";
 
 export default function AdminLogin() {
   const navigate = useNavigate();
-  const [login, setLogin] = useState({ name: "", password: "" });
+
+  const [login, setLogin] = useState({
+    email: "",
+    password: "",
+  });
 
   const onSubmit = async (e) => {
     e.preventDefault();
 
-    if (!login.name.trim() || !login.password.trim()) {
+    if (!login.email.trim() || !login.password.trim()) {
       return Swal.fire("Required", "Please provide all credentials", "warning");
     }
 
     try {
-      const res = await axios.get("http://localhost:3000/admin");
-      const admin = res.data[0];
+      const res = await axiosInstance.post("accounts/adminlogin/", {
+        email: login.email,
+        password: login.password,
+      });
 
-      if (!admin || login.name !== admin.adminName || login.password !== admin.password) {
-        return Swal.fire("Access Denied", "Invalid administrative credentials", "error");
-      }
-
-      // Store admin session
-      localStorage.setItem("Admin", JSON.stringify(admin));
+      localStorage.setItem("access", res.data.access);
+      localStorage.setItem("refresh", res.data.refresh);
+      localStorage.setItem(
+        "admin",
+        JSON.stringify({
+          id: res.data.id,
+          name: res.data.name,
+          email: res.data.email,
+          role: res.data.role,
+        })
+      );
 
       Swal.fire({
-        title: "Authenticated",
+        title: "Successfully Logged",
         text: "Welcome to the Command Center",
         icon: "success",
         timer: 1500,
         showConfirmButton: false,
+      }).then(() => {
+        navigate("/dashboard");
       });
-
-      navigate("/Dashboard");
     } catch (err) {
       console.error(err);
-      Swal.fire("System Error", "Connection to vault failed", "error");
+
+      Swal.fire(
+        "Access Denied",
+        err.response?.data?.detail ||
+          err.response?.data?.non_field_errors?.[0] ||
+          err.response?.data?.message ||
+          "Invalid administrative credentials",
+        "error"
+      );
     }
   };
 
   return (
     <div className="admin-login-page">
       <div className="luxury-login-card">
-        <button className="back-btn" onClick={() => navigate(-1)}>
+        <button className="back-btn" onClick={() => navigate("/")}>
           <MoveLeft size={20} />
           <span>Return</span>
         </button>
@@ -58,12 +77,12 @@ export default function AdminLogin() {
 
         <form onSubmit={onSubmit} className="login-form">
           <div className="input-wrapper">
-            <label>Identity</label>
+            <label>Email</label>
             <input
-              type="text"
-              placeholder="Username"
-              value={login.name}
-              onChange={(e) => setLogin({ ...login, name: e.target.value })}
+              type="email"
+              placeholder="Enter admin email"
+              value={login.email}
+              onChange={(e) => setLogin({ ...login, email: e.target.value })}
             />
           </div>
 

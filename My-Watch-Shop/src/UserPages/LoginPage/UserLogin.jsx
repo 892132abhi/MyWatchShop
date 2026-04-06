@@ -1,8 +1,8 @@
-import axios from 'axios'
 import './LoginPage.css'
 import Swal from 'sweetalert2'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import axiosInstance from '../../api/axiosInstance'
 
 export default function UserLogin() {
     const [loginData, SetLoginData] = useState({
@@ -17,19 +17,43 @@ export default function UserLogin() {
     async function HandleSubmit(e) {
         e.preventDefault()
         try {
-            // ... (Validation logic stays the same)
-            const res = await axios.get(`http://localhost:3000/users?email=${loginData.email}`)
-            const user = res.data[0]
-
-            if (!user || user.password !== loginData.password) {
-                Swal.fire({ title: "Error", text: "Invalid Credentials", icon: "error", confirmButtonColor: "#1a1a1a" });
-                return
+            const res = await axiosInstance.post('accounts/login/',{
+                email:loginData.email,
+                password:loginData.password
+            })
+            Swal.fire({
+                    title: "Login Complete",
+                    text: "Welcome to our WatchStore.",
+                    icon: "success",
+                    confirmButtonColor: "#d4af37", 
+                  }).then(() =>{
+                    localStorage.setItem("access", res.data.access)
+                    localStorage.setItem("refresh", res.data.refresh)
+                     localStorage.setItem("loggeduser", JSON.stringify(res.data))
+                     navigate("/")
+                  })
+            if (!res.data.active){
+                Swal.fire({
+                    title:" Account Blocked",
+                    icon:"error",
+                    text:"admin blocked this account",
+                    showConfirmButton:false
+                })
             }
-
-            localStorage.setItem("loggeduser", JSON.stringify(user))
-            navigate("/")
         } catch (err) {
             console.log("Error:", err)
+            const message = 
+            err.response?.data?.non_field_errors?.[0]||
+            err.response?.data?.detail||
+            err.response?.data?.message ||
+            "invalid email and password"
+
+            Swal.fire({
+                icon:"error",
+                text:message,
+                title:"Login Failed",
+                confirmButtonColor:"#d4af37"
+            })
         }
     }
 
@@ -67,7 +91,7 @@ export default function UserLogin() {
 
                 <p className='reg-text'>
                     Don't have an account? 
-                    <button className="reg-btn" onClick={Register}>Create One</button>
+                    <button type="button" className="reg-btn" onClick={Register}>Create One</button>
                 </p>
             </div>
         </div>

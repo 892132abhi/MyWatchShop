@@ -1,25 +1,38 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
-import './OrderDetails.css'; // Ensure your CSS file is imported
+import "./OrderDetails.css";
+import axiosInstance from "../api/axiosInstance";
+import { IndianRupee } from "lucide-react";
 
 export default function OrderDetails() {
-  const [order, setorder] = useState([]);
+  const [orders, setOrders] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get("http://localhost:3000/order");
-        setorder(res.data);
+        const res = await axiosInstance.get("orderlist/orderlist/");
+        setOrders(res.data);
       } catch (err) {
         console.error("Fetch error:", err);
       }
     };
-    fetchData();
-    const interval = setInterval(fetchData, 2000);
-    return () => clearInterval(interval);
-  }, []);
 
-  // --- REFINED LUXURY DESIGN THEME (PILL FUNCTION REMOVED) ---
+    fetchData();
+  }, []);
+    const updatestatus=async(id,status)=>{
+      try{
+         await axiosInstance.patch(`orderlist/update/status/${id}/`,{
+        status:status
+      })
+      setOrders((prev)=>
+      prev.map((item)=>
+        item.id==id? {...item,payment_status:status}:item
+      )
+      )
+      }catch(err){
+        console.log("Status update error:", err.response?.data || err.message);
+      }
+    }
+
   const theme = {
     container: {
       backgroundColor: "#fcfbf9",
@@ -92,14 +105,6 @@ export default function OrderDetails() {
       fontSize: "11px",
       color: "#999",
     },
-    brand: {
-      fontFamily: "'Playfair Display', serif",
-      fontStyle: "italic",
-      color: "#d4af37",
-      fontWeight: "700",
-      fontSize: "14px",
-      marginRight: "8px",
-    },
     total: {
       fontWeight: "700",
       fontSize: "16px",
@@ -119,42 +124,75 @@ export default function OrderDetails() {
           <thead style={theme.thead}>
             <tr>
               <th style={theme.th}>Client</th>
-              <th style={theme.th}>Product Details</th>
-              <th style={theme.th}>Valuation</th>
+              <th style={theme.th}>Order ID</th>
+              <th style={theme.th}>Payment Method</th>
+              <th style={theme.th}>Amount</th>
               <th style={theme.th}>Date</th>
               <th style={theme.th}>Status</th>
+              <th style={theme.th}>Manage Status</th>
             </tr>
           </thead>
           <tbody>
-            {order.map((oitem, oindex) =>
-              oitem.orders?.map((uitem, uindex) => (
-                <tr key={`${oindex}-${uindex}`} className="ledger-row">
-                  <td style={theme.td}>
-                    <span style={theme.clientName}>{oitem.name}</span>
-                    <span style={theme.clientEmail}>{oitem.email}</span>
-                  </td>
-                  <td style={theme.td}>
-                    <span style={theme.brand}>{uitem.item.brand}</span>
-                    <span style={{ color: "#444" }}>{uitem.item.name}</span>
-                    <span className="i-qty">Quantity: {uitem.item.quantity}</span>
-                  </td>
-                  <td style={theme.td}>
-                    <span style={theme.total}>
-                      ₹{(uitem.item.price * uitem.item.quantity).toLocaleString()}
-                    </span>
-                  </td>
-                  <td style={{ ...theme.td, color: "#777", fontSize: "12px" }}>
-                    {uitem.date}
-                  </td>
-                  <td style={theme.td}>
-                    {/* Updated to use CSS classes only */}
-                    <span className={`pill ${oitem.status ? 'pill-shipped' : 'pill-void'}`}>
-                      {oitem.status ? "Shipped" : "Canceled"}
-                    </span>
-                  </td>
-                </tr>
-              ))
-            )}
+            {orders.map((item) => (
+              <tr key={item.id} className="ledger-row">
+                <td style={theme.td}>
+                  <span style={theme.clientName}>{item.user_name}</span>
+                  <span style={theme.clientEmail}>{item.user_email}</span>
+                </td>
+
+                <td style={theme.td}>#{item.order_id}</td>
+
+                <td style={theme.td}>
+                  {
+                  item.payment_method === "cod"
+                  ? "Cash on Delivery"
+                  : item.payment_method === "onlinepayment"
+                  ? "Online Payment"
+                  : item.payment_method === "wallet"
+                  ? "Wallet"
+                  : item.payment_method
+                  }
+                </td>
+
+                <td style={theme.td}>
+                  <span style={theme.total}>
+                    <IndianRupee />{Number(item.total_amount).toLocaleString()}
+                  </span>
+                </td>
+
+                <td style={{ ...theme.td, color: "#777", fontSize: "12px" }}>
+                  {item.created_at}
+                </td>
+                <td style={theme.td}>
+                  {item.payment_status =="pending"&&(<>
+                    <span style={{color:"grey",fontWeight:800,fontSize:"17px"}}>{item.payment_status}</span>
+                  </>)}
+                  {item.payment_status =="completed"&&(<>
+                    <span style={{color:"#79AE6F",fontWeight:800,fontSize:"17px"}}>{item.payment_status}</span>
+                  </>)}
+                  {item.payment_status =="failed"&&(<>
+                    <span style={{color:"#AE2448",fontWeight:800,fontSize:"17px"}}>{item.payment_status}</span>
+                  </>)}
+                  {item.payment_status =="refunded"&&(<>
+                    <span style={{color:"#72BAA9",fontWeight:800,fontSize:"17px"}}>{item.payment_status}</span>
+                  </>)}
+                </td>
+                <td style={theme.td}>
+                  <select 
+                  value={item.payment_status}
+                  onChange={(e)=>updatestatus(item.id, e.target.value)}>
+                    <option value="pending" style={{color:"grey",fontWeight:800,fontSize:"17px"}}>PENDING</option>
+                    <option value="completed" style={{color:"#79AE6F",fontWeight:800,fontSize:"17px"}}>COMPLETED</option>
+                    <option value="failed" style={{color:"#AE2448",fontWeight:800,fontSize:"17px"}}>FAILED</option>
+                    <option value="refunded" style={{color:"#72BAA9",fontWeight:800,fontSize:"17px"}}>REFUNDED</option>
+                  </select>
+                  <span 
+                  >
+                  </span>
+                  
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>

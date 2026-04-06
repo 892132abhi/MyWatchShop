@@ -1,47 +1,34 @@
-import axios from "axios"
-import { useEffect, useState } from "react"
-import { AppContext } from "./APPContext"
+import { useEffect, useState } from "react";
+import { AppContext } from "./APPContext";
+import axiosInstance from "../api/axiosInstance";
 
 export default function HUB({ children }) {
-  const [Data, SetData] = useState([]);
-  const [addcart, setAddCart] = useState([]);
-  const [wishlist, setWishList] = useState([]);
+  const [addcart, setAddCart] = useState(0);
+  const [wishlist, setWishList] = useState(0);
+  const [wallets,setWallets] = useState("0.00")
+  const fetchCounts = async () => {
+    const token = localStorage.getItem("access");
+    if (!token) return;
 
-  // SAFE PARSE
-  const loginid = JSON.parse(localStorage.getItem("loggeduser") || "null");
+    try {
+       const walletbalance = await axiosInstance.get("wallet/balance/");
+      const cartcount = await axiosInstance.get("products/cart/count/");
+      const wishcount = await axiosInstance.get("products/wishlist/count/");
 
-  useEffect(() => {
-    let interval;
-
-    const fetching = async () => {
-      if (loginid) {
-        const res = await axios.get(`http://localhost:3000/users/${loginid.id}`);
-        setAddCart(res.data.cart || []);
-        setWishList(res.data.wishlist || []);
-      }
-    };
-
-    fetching();
-    interval = setInterval(fetching, 1000);
-
-    return () => clearInterval(interval);
-  }, [loginid]);
+      setAddCart(cartcount.data.cart_count || 0);
+      setWishList(wishcount.data.wish_count || 0);
+      setWallets(walletbalance.data.balance || "0.00")
+    } catch (err) {
+      console.log(err.response?.data || err.message);
+    }
+  };
 
   useEffect(() => {
-    const fetchdata = async () => {
-      try {
-        const res = await axios.get("http://localhost:3000/products");
-        SetData(res.data || []);
-      } catch (err) {
-        console.log("unable to fetch", err);
-      }
-    };
-
-    fetchdata();
+    fetchCounts();
   }, []);
-
+``
   return (
-    <AppContext.Provider value={{ addcart, wishlist }}>
+    <AppContext.Provider value={{ wallets,addcart, wishlist, fetchCounts }}>
       {children}
     </AppContext.Provider>
   );

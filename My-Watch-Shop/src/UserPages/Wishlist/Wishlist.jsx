@@ -1,18 +1,22 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState,useContext } from "react";
 import Swal from "sweetalert2";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
+import axiosInstance from "../../api/axiosInstance";
+import { toast } from "react-toastify";
+import "animate.css";
+import { AppContext } from "../../AppProvider/APPContext";
+import { IndianRupee } from "lucide-react";
 export default function Wishlist() {
   const [wishlists, setWishlists] = useState([]);
   const navigate = useNavigate();
-  const user = JSON.parse(localStorage.getItem("loggeduser"));
+  const{ fetchCounts }=useContext(AppContext)
+  const token = localStorage.getItem("access");
 
   useEffect(() => {
-    if (!user) {
+    if (!token) {
       Swal.fire({
         title: "Identify Yourself",
-        text: "Please login to access your curated collection.",
+        text: "Please login to access your  collection.",
         icon: "info",
         confirmButtonColor: "#000",
       }).then(() => navigate("/login"));
@@ -21,43 +25,72 @@ export default function Wishlist() {
 
     const fetchData = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/users/${user.id}`);
-        setWishlists(response.data.wishlist || []);
+        const response = await axiosInstance.get(`products/wishlist/`);
+        setWishlists(response.data || []);
       } catch (err) {
-        console.error("Fetch error:", err);
+        console.error("Fetch error:", err.response?.data||err.message);
       }
     };
 
     fetchData();
-  }, [user, navigate]);
+  }, [token,navigate]);
 
-  const payment = (item) => {
-    localStorage.setItem("purchase-item", JSON.stringify(item));
-    navigate("/payment");
-  };
+const addToCart = async (item) => {
+  try {
+    const res = await axiosInstance.post("products/cart/add/", {
+      product_id: item.product_id,
+      quantity: 1,
+    });
+
+    fetchCounts();
+
+    toast.success(res.data.message || "Added to cart", {
+      position: "top-left",
+      autoClose: 800,
+    });
+
+    // optional: go to cart page after adding
+    navigate("/cart");
+  } catch (err) {
+    console.error("Cart error:", err.response?.data || err.message);
+    toast.error(err.response?.data?.message || "Failed to add to cart", {
+      position: "top-left",
+      autoClose: 800,
+    });
+  }
+};
 
   const Remove = async (item) => {
-    const updatedWishlist = wishlists.filter((i) => i.id !== item.id);
     try {
-      setWishlists(updatedWishlist);
-      await axios.patch(`http://localhost:3000/users/${user.id}`, {
-        wishlist: updatedWishlist,
+     await axiosInstance.delete(`products/wishlist/remove/`, {
+      data:{
+        product_id:item.product_id
+      }
       });
+      fetchCounts();
+      toast.success("removed from Wishlist",{
+        position:"top-left",
+        autoClose:500
+      })
+      
+      setWishlists((prevWishlist) => 
+      prevWishlist.filter((wish) => wish.id !== item.id))
+
     } catch (err) {
-      console.error("Remove error:", err);
+      console.error("Remove error:", err.response?.data||err.message);
     }
   };
 
   return (
     <div style={styles.pageBackground}>
-      <header style={styles.header}>
+      <header style={styles.header} className="animate__animated animate__fadeIn">
         <h1 style={styles.mainTitle}>Your Collection</h1>
         <p style={styles.subTitle}>{wishlists.length} Items reserved for you</p>
       </header>
 
       <div style={styles.grid}>
         {wishlists.map((item) => (
-          <div key={item.id} style={styles.card}>
+          <div key={item.id} style={styles.card} className="animate__animated animate__fadeIn">
             <div style={styles.imageContainer}>
               <img src={item.image} alt={item.name} style={styles.image} />
               <button 
@@ -69,13 +102,12 @@ export default function Wishlist() {
             </div>
             
             <div style={styles.content}>
-              <h3 style={styles.itemDescription}>{item.description}</h3>
+              <h3 style={styles.itemDescription}>{item.name}</h3>
               <div style={styles.footer}>
-                {/* Applied your specific Luxury Price styling here */}
-                <span style={styles.priceTag}>₹{item.price.toLocaleString()}</span>
+                <span style={styles.priceTag}><IndianRupee />{item.price.toLocaleString()}</span>
                 
-                <button onClick={() => payment(item)} style={styles.actionBtn}>
-                  Purchase
+                <button onClick={() => addToCart(item)} style={styles.actionBtn}>
+                  Addtocart
                 </button>
               </div>
             </div>
@@ -84,7 +116,7 @@ export default function Wishlist() {
       </div>
 
       {wishlists.length === 0 && (
-        <div style={styles.emptyState}>
+        <div style={styles.emptyState} className="animate__animated animate__fadeIn">
           <h2 style={{fontFamily: "'Playfair Display', serif"}}>Your wishlist is empty</h2>
           <button onClick={() => navigate("/products")} style={styles.browseBtn}>Explore Products</button>
         </div>
@@ -96,7 +128,7 @@ export default function Wishlist() {
 const styles = {
   pageBackground: {
     padding: "60px 8%",
-    backgroundColor: "#fcfbf9", // Soft luxury off-white
+    backgroundColor: "#fcfbf9", 
     minHeight: "100vh",
     fontFamily: "'Montserrat', sans-serif",
   },

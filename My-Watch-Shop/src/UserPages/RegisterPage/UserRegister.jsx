@@ -1,15 +1,14 @@
-import axios from 'axios'
 import { useState } from "react"
 import { useNavigate } from 'react-router-dom'
 import Swal from 'sweetalert2'
 import './RegisterPage.css' // Ensure your luxury CSS is here
+import axiosInstance from '../../api/axiosInstance'
 
 export default function UserRegister() {
   const navigate = useNavigate()
 
   const [registerData, SetRegisterData] = useState({
     name: "",
-    phone: "",
     email: "",
     password: "",
     confirmPassword: "",
@@ -38,26 +37,23 @@ export default function UserRegister() {
     }
 
     try {
-      const res = await axios.get(`http://localhost:3000/users?email=${registerData.email}`)
-      if (res.data.length > 0) {
-        SetErr("This email is already part of our collection.")
-        return
+        const payload={
+        name:registerData.name,
+        email:registerData.email,
+        password:registerData.password
       }
+      
 
-      await axios.post("http://localhost:3000/users", {
-        ...registerData,
-        wishlist: [],
-        cart: [],
-        orders: [],
-        active: true
-      })
+      await axiosInstance.post('accounts/register/',
+        payload
+      )
 
       Swal.fire({
         title: "Registration Complete",
-        text: "Welcome to our exclusive boutique.",
+        text: "Welcome to our WatchStore.",
         icon: "success",
         confirmButtonColor: "#d4af37", // Matching Gold
-      }).then(() => navigate("/login"))
+      }).then(() => navigate("/"))
 
     } catch (error) {
       SetErr("System error: " + error.message)
@@ -93,19 +89,6 @@ export default function UserRegister() {
             />
           </div>
         </div>
-
-        <div className="regist">
-          <div className="labels">
-            <label>Phone Number</label>
-            <input 
-              type="tel" 
-              placeholder="+91 ..." 
-              value={registerData.phone} 
-              onChange={(e) => SetRegisterData({ ...registerData, phone: e.target.value })} 
-            />
-          </div>
-        </div>
-
         <div className="regist">
           <div className="labels">
             <label>Password</label>

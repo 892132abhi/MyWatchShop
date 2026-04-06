@@ -59,7 +59,17 @@
       "password": "12345",
       "confirmPassword": "12345",
       "wishlist": [],
-      "cart": [],
+      "cart": [
+        {
+          "name": "Apple_Watch_Series_9",
+          "type": "Smartwatch",
+          "brand": "Apple",
+          "price": 38499,
+          "image": "/Watches/images/Apple Watch Series 9.jpg",
+          "description": "A high-tech smartwatch with health tracking, notifications, and customizable faces.",
+          "id": "bb63"
+        }
+      ],
       "orders": [
         {
           "item": {
