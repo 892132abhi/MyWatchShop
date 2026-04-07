@@ -13,14 +13,16 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 from pathlib import Path
 from datetime import timedelta
 import cloudinary
-
+import os
+from dotenv import load_dotenv
+load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 cloudinary.config(
-    cloud_name='dkrfjoslw',
-    api_key='313485781479493',
-    api_secret='GBB_OZ5mbFbD1R4j_lphUjyZbP0',
+    cloud_name=os.getenv("clouds_name"),
+    api_key=os.getenv("api_keys"),
+    api_secret=os.getenv("api_secrets"),
 )
 REST_FRAMEWORK={
     'DEFAULT_AUTHENTICATION_CLASSES':(
@@ -42,7 +44,7 @@ SPECTACULAR_SETTINGS = {
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-7_-s!vr1)31#csyvs^tec8z#&t@hb901ua&4yujs1ue3a0gbed'
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -109,12 +111,12 @@ WSGI_APPLICATION = 'core.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'watchshop_db',      # The name you created in Step 2
-        'USER': 'postgres',         # Your default Postgres username
-        'PASSWORD': '2003', # The password you set during Postgres installation
-        'HOST': 'localhost',        # Usually localhost
-        'PORT': '5432',             # Default PostgreSQL port
+        'ENGINE': os.getenv("DB_ENGINE"),
+        'NAME': os.getenv("DB_NAME"),      # The name you created in Step 2
+        'USER': os.getenv("DB_USER"),         # Your default Postgres username
+        'PASSWORD': os.getenv("DB_PASSWORD"), # The password you set during Postgres installation
+        'HOST': os.getenv("DB_HOST"),        # Usually localhost
+        'PORT': os.getenv("DB_PORT"),             # Default PostgreSQL port
     }
 }
 
@@ -160,23 +162,23 @@ CORS_ALLOWED_ORIGINS=[
     'http://localhost:5175',
     'http://localhost:5174',
 ]
-AUTH_USER_MODEL='accounts.Users'
+AUTH_USER_MODEL=os.getenv("AUTH_USER_MODEL_NAME")
 # SMTP
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST = "smtp.gmail.com"
-EMAIL_PORT = 587
-EMAIL_HOST_USER = "sabhiram41@gmail.com"
-EMAIL_HOST_PASSWORD = "lysw xdvp etbd svct"
-EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = "sabhiram41@gmail.com"
+EMAIL_BACKEND =os.getenv("SMTP_EMAIL_BACKEND")
+EMAIL_HOST = os.getenv("SMTP_EMAIL_HOST")
+EMAIL_PORT = os.getenv("SMTP_EMAIL_PORT")
+EMAIL_HOST_USER = os.getenv("SMTP_EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = os.getenv("SMTP_EMAIL_HOST_PASSWORD")
+EMAIL_USE_TLS = os.getenv("SMTP_EMAIL_USE_TLS")
+DEFAULT_FROM_EMAIL = os.getenv("SMTP_DEFAULT_FROM_EMAIL")
 
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': 'dkrfjoslw',
-    'API_KEY': '313485781479493',
-    'API_SECRET': 'GBB_OZ5mbFbD1R4j_lphUjyZbP0'
+    'CLOUD_NAME': os.getenv("CLOUD_NAME"),
+    'API_KEY': os.getenv("API_KEY"),
+    'API_SECRET':os.getenv("API_SECRET")
 }
 
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+DEFAULT_FILE_STORAGE = os.getenv("DEFAULT_STORAGE")
 
-RAZORPAY_KEY_ID = "rzp_test_SY7Y2SmY90g8GV"
-RAZORPAY_KEY_SECRET = "qZpH0urN7Tb24eKHSCS0yaVR"
+RAZORPAY_KEY_ID = os.getenv("PAYMENT_RAZORPAY_KEY_ID")
+RAZORPAY_KEY_SECRET =os.getenv("PAYMENT_RAZORPAY_KEY_SECRET")

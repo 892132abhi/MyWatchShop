@@ -104,9 +104,6 @@ class Profiles(APIView):
     permission_classes = [IsAuthenticated]
     def get(self,request):
         user = request.user
-        print("USER:", request.user)
-        print("AUTH:", request.user.is_authenticated)
-        print("HEADERS:", request.headers.get("Authorization"))
         return Response({
             "id":user.id,
             "is_active":user.is_active
