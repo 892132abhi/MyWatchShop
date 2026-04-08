@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
-import "./ProductDetail.css";
+import "./productdetail.css";
 import axiosInstance from "../../api/axiosInstance";
 import { AppContext } from "../../AppProvider/APPContext";
 import { toast } from "react-toastify";
