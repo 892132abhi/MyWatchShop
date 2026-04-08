@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: "http://13.206.83.51:8000/api/",
+  baseURL: "https://watchflow.duckdns.org/api/",
 
   headers: {
     "Content-Type": "application/json"
@@ -51,7 +51,7 @@ axiosInstance.interceptors.response.use(
 
       try {
         const res = await axios.post(
-          "http://127.0.0.1:8000/api/accounts/token/refresh/",
+          "https://watchflow.duckdns.org/api/accounts/token/refresh/",
           {
             refresh: refreshToken,
           }
