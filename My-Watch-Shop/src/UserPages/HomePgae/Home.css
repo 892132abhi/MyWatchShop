@@ -9,18 +9,16 @@ body {
 .home-page {
   background: linear-gradient(to bottom, #0a0a0a, #111111, #181818);
   color: white;
-  overflow-x: hidden;
 }
 
 /* HERO SECTION */
 .hero-wrapper {
   position: relative;
-  min-height: 100vh;
+  height: 100vh;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 110px 0 80px;
 }
 
 .hero-video {
@@ -45,30 +43,28 @@ body {
   position: relative;
   z-index: 2;
   max-width: 900px;
-  width: min(100% - 32px, 900px);
-  padding: 20px 16px;
+  padding: 20px;
 }
 
 .hero-tag {
   color: #d4af37;
-  font-size: clamp(0.78rem, 0.7rem + 0.35vw, 0.95rem);
+  font-size: 0.95rem;
   letter-spacing: 3px;
   text-transform: uppercase;
   margin-bottom: 14px;
 }
 
 .hero-title {
-  font-size: clamp(2.2rem, 5vw, 4rem);
+  font-size: 4rem;
   font-weight: 700;
   line-height: 1.2;
   color: #ffffff;
   text-shadow: 0 6px 25px rgba(0, 0, 0, 0.6);
-  margin-bottom: 0;
 }
 
 .hero-subtitle {
   margin-top: 20px;
-  font-size: clamp(0.95rem, 0.85rem + 0.5vw, 1.1rem);
+  font-size: 1.1rem;
   color: #d6d6d6;
   max-width: 700px;
   margin-left: auto;
@@ -91,8 +87,6 @@ body {
   letter-spacing: 0.5px;
   transition: all 0.35s ease;
   box-shadow: 0 8px 25px rgba(212, 175, 55, 0.28);
-  width: auto;
-  max-width: 100%;
 }
 
 .shop-btn:hover {
@@ -114,12 +108,12 @@ body {
   color: #d4af37;
   text-transform: uppercase;
   letter-spacing: 2px;
-  font-size: clamp(0.8rem, 0.72rem + 0.3vw, 0.9rem);
+  font-size: 0.9rem;
   margin-bottom: 10px;
 }
 
 .section-title {
-  font-size: clamp(1.8rem, 3vw, 2.3rem);
+  font-size: 2.3rem;
   font-weight: 700;
   color: #ffffff;
 }
@@ -157,7 +151,7 @@ body {
 
 .watch-image {
   width: 100%;
-  aspect-ratio: 4 / 5;
+  height: 260px;
   object-fit: cover;
   transition: transform 0.5s ease;
 }
@@ -202,14 +196,14 @@ body {
 }
 
 .watch-title {
-  font-size: clamp(1rem, 0.9rem + 0.4vw, 1.15rem);
+  font-size: 1.15rem;
   font-weight: 700;
   color: #f5d76e;
   margin-bottom: 10px;
 }
 
 .watch-desc {
-  font-size: clamp(0.9rem, 0.84rem + 0.2vw, 0.95rem);
+  font-size: 0.95rem;
   color: #c9c9c9;
   line-height: 1.6;
   margin-bottom: 0;
@@ -225,7 +219,6 @@ body {
 
 .banner-inner {
   max-width: 900px;
-  padding: 0 16px;
 }
 
 .banner-tag {
@@ -236,14 +229,14 @@ body {
 }
 
 .banner-inner h2 {
-  font-size: clamp(1.8rem, 3vw, 2.2rem);
+  font-size: 2.2rem;
   color: white;
   margin-bottom: 15px;
 }
 
 .banner-inner p {
   color: #cfcfcf;
-  font-size: clamp(0.95rem, 0.88rem + 0.2vw, 1rem);
+  font-size: 1rem;
   line-height: 1.8;
 }
 
@@ -262,114 +255,44 @@ body {
 
 /* RESPONSIVE */
 @media (max-width: 992px) {
-  .hero-wrapper {
-    min-height: 90vh;
-    padding-top: 100px;
-  }
-
-  .featured-section {
-    padding-top: 64px;
-    padding-bottom: 64px;
+  .hero-title {
+    font-size: 3rem;
   }
 }
 
 @media (max-width: 768px) {
   .hero-wrapper {
-    min-height: auto;
-    padding: 96px 0 64px;
+    height: 85vh;
   }
 
-  .hero-content {
-    width: min(100% - 24px, 900px);
-    padding: 12px;
-  }
-
-  .hero-tag {
-    letter-spacing: 2px;
+  .hero-title {
+    font-size: 2.3rem;
   }
 
   .hero-subtitle {
-    line-height: 1.65;
+    font-size: 1rem;
   }
 
-  .featured-section {
-    padding-top: 56px;
-    padding-bottom: 56px;
+  .section-title {
+    font-size: 1.9rem;
   }
 
-  .section-header {
-    margin-bottom: 28px;
-  }
-
-  .luxury-card:hover {
-    transform: translateY(-6px);
-  }
-
-  .luxury-banner {
-    padding: 56px 0;
+  .banner-inner h2 {
+    font-size: 1.8rem;
   }
 }
 
 @media (max-width: 576px) {
-  .hero-wrapper {
-    padding: 88px 0 52px;
-  }
-
-  .hero-content {
-    width: min(100% - 20px, 900px);
-    padding: 8px;
-  }
-
-  .hero-tag {
-    margin-bottom: 10px;
-  }
-
-  .hero-subtitle {
-    margin-top: 16px;
+  .hero-title {
+    font-size: 1.9rem;
   }
 
   .shop-btn {
-    padding: 12px 20px;
+    padding: 12px 24px;
     font-size: 0.95rem;
-    width: 100%;
   }
 
-  .featured-section {
-    padding-top: 48px;
-    padding-bottom: 48px;
-  }
-
-  .card-body-custom {
-    padding: 18px 16px 22px;
-  }
-
-  .gold-line {
-    width: 64px;
-  }
-
-  .luxury-banner {
-    padding: 48px 0;
-  }
-
-  .footer-luxury {
-    padding: 18px 12px;
-  }
-}
-
-@media (max-width: 400px) {
-  .hero-wrapper {
-    padding-top: 80px;
-  }
-
-  .hero-tag,
-  .section-tag,
-  .banner-tag {
-    letter-spacing: 1.5px;
-  }
-
-  .hero-subtitle,
-  .banner-inner p,
-  .watch-desc {
-    line-height: 1.55;
+  .watch-image {
+    height: 220px;
   }
 }
