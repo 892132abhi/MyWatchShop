@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 from pathlib import Path
 from datetime import timedelta
 import cloudinary
+import mimetypes
 import os
 from dotenv import load_dotenv
 load_dotenv()
@@ -182,3 +183,5 @@ DEFAULT_FILE_STORAGE = os.getenv("DEFAULT_STORAGE")
 
 RAZORPAY_KEY_ID = os.getenv("PAYMENT_RAZORPAY_KEY_ID")
 RAZORPAY_KEY_SECRET =os.getenv("PAYMENT_RAZORPAY_KEY_SECRET")
+
+mimetypes.add_type("text/css", ".css", True)

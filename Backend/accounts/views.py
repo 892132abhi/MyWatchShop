@@ -36,7 +36,7 @@ class RegisterPage(APIView):
                 'uidb64': uid,
                 'token': token
             })
-            activation_link = f"http://127.0.0.1:8000{activation_path}"
+            activation_link = f"https://watchflow.duckdns.org{activation_path}"
 
             subject = "Verify your WatchStore account"
             message = (
