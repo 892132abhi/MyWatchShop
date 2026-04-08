@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState,useContext } from "react";
 import "./OrderDetails.css";
 import axiosInstance from "../api/axiosInstance";
 import { IndianRupee } from "lucide-react";
-
+import { AppContext } from "../AppProvider/APPContext";
 export default function OrderDetails() {
   const [orders, setOrders] = useState([]);
-
+const { fetchCounts } = useContext(AppContext);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -15,9 +15,9 @@ export default function OrderDetails() {
         console.error("Fetch error:", err);
       }
     };
-
+    fetchCounts()
     fetchData();
-  }, []);
+  }, [fetchCounts]);
     const updatestatus=async(id,status)=>{
       try{
          await axiosInstance.patch(`orderlist/update/status/${id}/`,{
