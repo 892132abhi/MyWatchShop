@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 
 export default function Home() {
   const navigate = useNavigate();
-
   const goProducts = () => navigate("/products");
 
   const featuredWatches = [
@@ -17,16 +16,12 @@ export default function Home() {
   return (
     <div className="home-page">
       <section className="hero-wrapper">
-        <video autoPlay muted loop className="hero-video">
-          <source
-            src="video/11899562-hd_1920_1080_24fps.mp4"
-            type="video/mp4"
-          />
+        <video autoPlay muted loop playsInline className="hero-video">
+          <source src="video/11899562-hd_1920_1080_24fps.mp4" type="video/mp4" />
         </video>
-
         <div className="hero-overlay"></div>
 
-        <div className="hero-content container text-center">
+        <div className="hero-content text-center">
           <p className="hero-tag">Luxury Watch Collection</p>
           <h1 className="hero-title">
             Timeless Elegance <br />
@@ -36,7 +31,6 @@ export default function Home() {
             Discover premium timepieces that blend precision, heritage, and
             luxury into every second.
           </p>
-
           <div className="hero-buttons">
             <button className="shop-btn" onClick={goProducts}>
               Explore Collection
@@ -45,53 +39,50 @@ export default function Home() {
         </div>
       </section>
 
-      {/* FEATURED COLLECTION */}
-      <section className="featured-section container py-5">
-        <div className="section-header text-center">
-          <p className="section-tag">Exclusive Range</p>
-          <h2 className="section-title">Featured Collection</h2>
-          <div className="gold-line"></div>
-        </div>
+      <section className="featured-section">
+        <div className="container">
+          <div className="section-header text-center">
+            <p className="section-tag">Exclusive Range</p>
+            <h2 className="section-title">Featured Collection</h2>
+            <div className="gold-line"></div>
+          </div>
 
-        <div className="row g-4 mt-2">
-          {featuredWatches.map((item, index) => (
-            <div key={index} className="col-md-6 col-lg-3">
-              <div className="luxury-card">
-                <div className="image-wrapper">
-                  <img src={item.img} alt={item.title} className="watch-image" />
-                  <div className="card-overlay">
-                    <button className="view-btn" onClick={goProducts}>
-                      View More
-                    </button>
+          <div className="row g-4 mt-2">
+            {featuredWatches.map((item, index) => (
+              <div key={index} className="col-12 col-md-6 col-lg-3">
+                <div className="luxury-card">
+                  <div className="image-wrapper">
+                    <img src={item.img} alt={item.title} className="watch-image" />
+                    <div className="card-overlay">
+                      <button className="view-btn" onClick={goProducts}>
+                        View More
+                      </button>
+                    </div>
+                  </div>
+                  <div className="card-body-custom">
+                    <h5 className="watch-title">{item.title}</h5>
+                    <p className="watch-desc">
+                      A premium statement piece designed for those who value style and excellence.
+                    </p>
                   </div>
                 </div>
-
-                <div className="card-body-custom">
-                  <h5 className="watch-title">{item.title}</h5>
-                  <p className="watch-desc">
-                    A premium statement piece designed for those who value style
-                    and excellence.
-                  </p>
-                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* LUXURY BANNER */}
-      <section className="luxury-banner container-fluid">
-        <div className="banner-inner container text-center">
+      <section className="luxury-banner">
+        <div className="container text-center">
           <p className="banner-tag">Since 2026</p>
           <h2>Where Innovation Meets Luxury</h2>
-          <p>
+          <p className="mx-auto" style={{ maxWidth: '800px' }}>
             Every watch in our collection is chosen to reflect bold character,
             precision engineering, and timeless design.
           </p>
         </div>
       </section>
 
-      {/* FOOTER */}
       <footer className="footer-luxury text-center">
         <p>© 2026 Watch Store | Timeless Style ⌚</p>
       </footer>
