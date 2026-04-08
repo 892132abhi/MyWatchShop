@@ -1,0 +1,48 @@
+name: Deploy Backend to AWS
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.abhiramsreenarayanan }}
+          password: ${{ secrets.dckr_pat_67efjE4sufAMoeGFugBQUShp_oc }}
+
+      - name: Build and Push Docker Image
+        run: |
+          docker build -t abhiramsreenarayanan/react-project-backend:latest .
+          docker push abhiramsreenarayanan/react-project-backend:latest
+
+      - name: Deploy to AWS EC2 via SSH
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.13.206.83.51 }}
+          username: ubuntu
+          key: ${{ secrets.-----BEGIN RSA PRIVATE KEY-----MIIEpQIBAAKCAQEAwBUIfHMosPE2byMxldCbSZ/p8ZWozWs4RPoSnmVD95O+yd+cy3joX4IKdBFZkLEjdN7IGfyVbQCXJJ6SyfW7vDBJiV5Ioq0xXv18cZc6RTVuUxS0Jznyg/hNd1ZrQlh8x03eRp1jATJbMYI5IX/R17X0x8ukm2+5mLhloCEAOamXeENp7t/0be0IlMzkjjwetD3lgp5UzpYnBd2OLPBa0kjG25eOwav5EhgkugDWhJnR425yS6CVIMEhGHiCCPoo0XPJ4LlMoQN/04sfC1mH30O++6tYcfjoHu570dvGcT0eictyYkCpZjfYGpUCk1RvUaGttETutk2wXITcb5UbHwIDAQABAoIBAQCEwsTfx3Sbf80A2dFe3BVIuPeoW6mVeYMl4bZWtmVYzEx1GVI1LHdn8+inuoouQNDh6U1i8LqS4XKWA+gvIOJGOxXIlVsc3RofrpKBrGXBCiIb2FaAOkQNxOQ+FIQEEkcENiTop8WTQSvYt0onhkISlxf9tBosuPcNwH21RLn0H7hl5Tk4Ls7Igzsjqc2QSphjYX6Fve5VGJFKM4RIHakQV0ZiF/pt7KPCVWMtQWf7sQhCrdSnPJXggBDUkSHseW91qjGUlV9DmKPemoIBbxWgQMhCRwzh/sM314t8ly8slkdNwLH5QCRLxa0tsHhH+QC8WBAS+QMRpmab2xNL6e2hAoGBAPaaNKylA524nJ0uUOAfXwGsqvM7IGOx+NDHclMyQ9KUzCAIEhRHYnLXNXue+88/Yuax1KY27px7fXhi/IYgR3LWWJ29pnv5lt9Wa2uXi+xOOy/ZQv5rbntphKuqGiq1oacX6IHJEZUpIYvLIQtbKyU8fsmtxOi1gDY/T7RcrkOxAoGBAMdm8PGOyY2Scwx8939iAWX94dfW/ScsulPNu6H/mMjWfBxU/dlBYBTkqfdzK3mM8zaFDqiq6EyiIjYHamS8ouMEkC53evDXCKolXSRAs3OopLoAWXKQgmGYHekRFX8GKRWu+uvLegtWfbvWNK9eRLIR4F/0Bkm6YCPRi8QqRQ/PAoGBAK58D9c0bumTLWVd1yWtrMh/hvnRFSrVS2tWI8NQJoMCe6gSbdBhbfw54ALXS+6pN+5pV0BAT/byvaWHzIuOnV9Y4JzECt9fi2v9NsaLFRsfg2tou6lPFH5H+/KGyjr8ByQ2m3Hxdfpnfu/tyzTAzjdrpX5H8LKDcfNwOpIwnbERAoGBALa7VW5oZbhBTwFQvBaWH6XxxTdhI1j1GkOWM66/ZqoWNGJaWM7xpDVBX6kOd/bJ/lAmG0riZENmCWft38g1PihAlEig4Z830A7scrC4Qjtpfpudmlrspy78kdx19XcUlC30zqmrLEqbllm+cUWMY/OzgiUsoV6LV3M7opPAEM3tAoGAe/aHLHvaKD/DRPo9NyrkCTPzzoL9NjMLJpTrIEWMKZUC+xPKWAqALL/rJ0Ur3Pw14RySng6ryR3Uy5vv6lYtMwwJb0UKLWPO10jfTHd5zXKBTE8yqE8FHLTOy3T8J/0FAvTFJpD4OI0fFLrrJ7BYPMZ5O7bEhARPTJSuFDP+tmg=-----END RSA PRIVATE KEY----- }}
+          script: |
+            docker stop react-backend || true
+            docker rm react-backend || true
+            docker pull abhiramsreenarayanan/react-project-backend:latest
+            docker run -d \
+              --name react-backend \
+              -p 8000:8000 \
+              -e DB_NAME=postgres \
+              -e DB_USER=postgres \
+              -e DB_PASSWORD=${{ secrets.abhiram8921 }} \
+              -e DB_HOST=${{ secrets.watchshop-db.c1g0a60cm6r6.ap-south-1.rds.amazonaws.com }} \
+              -e DB_PORT=5432 \
+              -e ALLOWED_HOSTS=${{ secrets.watchflow.duckdns.org,13.206.83.51 }} \
+              -e CORS_ALLOWED_ORIGINS=${{ secrets.https://my-watch-shop.vercel.app }} \
+              -e CSRF_TRUSTED_ORIGINS=${{ secrets.https://my-watch-shop.vercel.app,https://watchflow.duckdns.org }} \
+              -e SECURE_PROXY_SSL_HEADER=HTTP_X_FORWARDED_PROTO,https \
+              abhiramsreenarayanan/react-project-backend:latest
