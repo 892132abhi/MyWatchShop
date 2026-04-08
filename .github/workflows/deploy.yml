@@ -1,4 +1,4 @@
-name: Deploy Backend to AWS
+name: Django CI/CD Pipeline
 
 on:
   push:
@@ -6,8 +6,36 @@ on:
       - main
 
 jobs:
-  build-and-deploy:
+  # --- JOB 1: TEST ---
+  test:
     runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install Dependencies
+        run: |
+          cd Backend
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run Migrations Check & Tests
+        run: |
+          cd Backend
+          # This checks if your code has errors without needing a real DB
+          python manage.py check 
+          # Uncomment the line below if you have written tests
+          # python manage.py test
+
+  # --- JOB 2: DEPLOY (Only runs if Test passes) ---
+  deploy:
+    runs-on: ubuntu-latest
+    needs: test
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -20,6 +48,7 @@ jobs:
 
       - name: Build and Push Docker Image
         run: |
+          # We use -f Backend/Dockerfile because your file is in a subfolder
           docker build -t abhiramsreenarayanan/react-project-backend:latest -f Backend/Dockerfile .
           docker push abhiramsreenarayanan/react-project-backend:latest
 
@@ -30,9 +59,14 @@ jobs:
           username: ubuntu
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
+            # Pull the latest image
+            docker pull abhiramsreenarayanan/react-project-backend:latest
+            
+            # Stop and remove the old container if it exists
             docker stop react-backend || true
             docker rm react-backend || true
-            docker pull abhiramsreenarayanan/react-project-backend:latest
+            
+            # Run the new container with all secrets
             docker run -d \
               --name react-backend \
               -p 8000:8000 \
@@ -46,3 +80,6 @@ jobs:
               -e CSRF_TRUSTED_ORIGINS=${{ secrets.CSRF_ORIGINS }} \
               -e SECURE_PROXY_SSL_HEADER=HTTP_X_FORWARDED_PROTO,https \
               abhiramsreenarayanan/react-project-backend:latest
+            
+            # Optional: Clean up old unused images to save space on EC2
+            docker image prune -f
