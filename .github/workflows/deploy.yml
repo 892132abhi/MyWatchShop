@@ -20,7 +20,7 @@ jobs:
 
       - name: Build and Push Docker Image
         run: |
-          docker build -t abhiramsreenarayanan/react-project-backend:latest .
+          docker build -t abhiramsreenarayanan/react-project-backend:latest -f Backend/Dockerfile .
           docker push abhiramsreenarayanan/react-project-backend:latest
 
       - name: Deploy to AWS EC2 via SSH
