@@ -1,15 +1,16 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState,useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../../api/axiosInstance";
 import "./order.css";
-
+import { AppContext } from "../../AppProvider/APPContext";
 export default function Userorder() {
   const [order, setOrder] = useState([]);
   const navigate = useNavigate();
-
+  const { fetchCounts } = useContext(AppContext);
   useEffect(() => {
+    fetchCounts();
     fetchOrders();
-  }, []);
+  }, [fetchCounts]);
 
   const fetchOrders = async () => {
     try {
