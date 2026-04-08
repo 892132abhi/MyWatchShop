@@ -15,7 +15,7 @@ import {
 } from "lucide-react";
 import { AppContext } from "../../AppProvider/APPContext";
 import "animate.css";
-import "./Navbar.css";
+import "./navbar.css";
 
 
 export default function Navbar() {
