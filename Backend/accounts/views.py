@@ -158,12 +158,14 @@ class blockUser(APIView):
         return Response({
             "message":f"{user.name} status is Updated"
         },status=status.HTTP_200_OK)
+        
+        
 class Deleteuser(APIView):
-    def delete(self,request,email):
+    def delete(self, request, id):
         try:
-            user = Users.objects.get(email=email)
+            user = Users.objects.get(id=id)
+            user.delete()
+            return Response({"message": "user deleted"}, status=200)
         except Users.DoesNotExist:
-            return Response({"message":"user not exist"})
-        user.delete()
-        return Response({"message":"user deleted"})
+            return Response({"message": "user not exist"}, status=404)
     

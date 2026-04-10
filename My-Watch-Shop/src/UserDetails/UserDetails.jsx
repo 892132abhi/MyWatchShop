@@ -73,12 +73,12 @@ export default function UserManagement() {
 
     try {
       // API call to delete - using ID as is standard for delete operations
-      await axiosInstance.delete(`accounts/users/delete/${user.email}/`);
+      await axiosInstance.delete(`accounts/users/delete/${user.id}/`);
 
       Swal.fire("Deleted", "User has been removed from the registry.", "success");
 
       // Remove from UI state
-      setUsers((prev) => prev.filter((u) => u.email !== user.email));
+      setUsers((prev) => prev.filter((u) => u.id !== user.id));
     } catch (err) {
       console.error("Delete Error:", err);
       Swal.fire("Error", "Could not delete user", "error");
