@@ -6,8 +6,7 @@ body {
   background-color: #fcfbf9; /* Luxury off-white */
   margin: 0;
   padding: 0;
-  overscroll-behavior-x: none;
-  overscroll-behavior-y: none;
+  overflow-x: hidden;
 }
 /* ====== CUSTOM SMOOTH DROPDOWN ====== */
 .luxury-dropdown-wrapper {
@@ -107,6 +106,8 @@ body {
   border: 1px solid #333;
   background: #252525;
   color: #fff;
+  min-width: 220px;
+  width: 100%;
 }
 
 .navbar button {
@@ -137,8 +138,7 @@ body {
 /* ====== PRODUCT GRID ====== */
 .productdiv {
   display: grid;
-  /* This creates exactly 3 equal columns */
-  grid-template-columns: repeat(3, 1fr); 
+  grid-template-columns: repeat(3, minmax(0, 1fr)); 
   gap: 40px; /* Space between the luxury cards */
   padding: 60px 10%; /* More side padding for a boutique feel */
   background-color: #fcfbf9;
@@ -226,4 +226,65 @@ body {
 .product-card button:hover {
   background-color: #d4af37;
   color: #000;
+}
+
+@media (max-width: 992px) {
+  .navbar {
+    justify-content: stretch;
+    gap: 12px;
+  }
+
+  .navbar .search-container {
+    width: 100%;
+  }
+
+  .luxury-dropdown-wrapper {
+    flex: 1 1 220px;
+  }
+
+  .productdiv {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    padding: 40px 6%;
+    gap: 28px;
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    padding: 14px;
+  }
+
+  .luxury-dropdown-wrapper,
+  .navbar-btn {
+    width: 100%;
+  }
+
+  .luxury-dropdown-trigger,
+  .navbar button {
+    width: 100%;
+  }
+
+  .productdiv {
+    grid-template-columns: 1fr;
+    padding: 28px 16px 40px;
+    gap: 20px;
+  }
+
+  .product-card {
+    padding: 22px 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar .search-container input {
+    min-width: 0;
+    font-size: 13px;
+  }
+
+  .luxury-dropdown-trigger,
+  .luxury-option,
+  .navbar button {
+    font-size: 10px;
+    letter-spacing: 1px;
+  }
 }

@@ -1,7 +1,41 @@
 /* ORDER CARDS */
 body{
-     overscroll-behavior-x: none;
-  overscroll-behavior-y: none;
+    overflow-x: hidden;
+}
+
+.order-details-wrapper {
+    padding: 40px 16px 60px;
+    background: #fcfbf9;
+    min-height: 100vh;
+}
+
+.page-header {
+    max-width: 980px;
+    margin: 0 auto 32px;
+    text-align: center;
+    position: relative;
+}
+
+.page-header h1 {
+    margin-bottom: 10px;
+}
+
+.accent-line {
+    width: 72px;
+    height: 3px;
+    margin: 0 auto 14px;
+    background: linear-gradient(to right, #8c6a17, #d4af37, #f5d76e);
+}
+
+.order-back-btn {
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.orders-container {
+    max-width: 800px;
+    margin: 0 auto;
 }
 .luxury-order-card {
     display: flex;
@@ -89,4 +123,66 @@ body{
 .order-price {
     color: #1a1a1a !important;
     font-weight: 700 !important;
+}
+
+@media (max-width: 992px) {
+    .order-meta-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .order-back-btn {
+        position: static;
+        margin-bottom: 20px;
+    }
+
+    .page-header {
+        text-align: left;
+    }
+
+    .accent-line {
+        margin-left: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .luxury-order-card {
+        flex-direction: column;
+    }
+
+    .order-image-box {
+        width: 100%;
+        height: 260px;
+    }
+
+    .order-info-box {
+        padding: 22px 18px;
+    }
+
+    .order-header-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .order-item-name {
+        font-size: 1.3rem;
+    }
+
+    .order-meta-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .order-details-wrapper {
+        padding: 24px 12px 40px;
+    }
+
+    .page-header h1 {
+        font-size: 1.8rem;
+    }
+
+    .order-image-box {
+        height: 210px;
+    }
 }

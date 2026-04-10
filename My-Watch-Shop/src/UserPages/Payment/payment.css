@@ -71,3 +71,17 @@
 .payment-btn:active {
     transform: scale(0.98);
 }
+
+@media (max-width: 768px) {
+  .product-scroll {
+    max-height: none;
+    padding-right: 0;
+  }
+}
+
+@media (max-width: 576px) {
+  .product-scroll img {
+    width: 88px !important;
+    height: 88px !important;
+  }
+}

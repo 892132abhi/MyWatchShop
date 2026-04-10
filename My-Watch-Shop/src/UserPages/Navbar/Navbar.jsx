@@ -12,15 +12,17 @@ import {
   ClipboardList,
   Wallet,
   IndianRupee,
+  Menu,
+  X,
 } from "lucide-react";
 import { AppContext } from "../../AppProvider/APPContext";
 import "animate.css";
-import "./navbar.css";
 
 
 export default function Navbar() {
   const [login, setLogin] = useState(false);
   const [user, setUser] = useState(null);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const navigate = useNavigate();
   const { wallets,addcart, wishlist, fetchCounts } = useContext(AppContext);
@@ -44,6 +46,10 @@ export default function Navbar() {
       });
     }
   }, [navigate]);
+
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [user]);
 
   useEffect(() => {
       const token = localStorage.getItem("access");
@@ -106,18 +112,32 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className="navbar navbar-expand-lg custom-navbar px-4 shadow-sm">
-        <h3 className="fw-bold brand-name animate__animated animate__fadeInDown">
-          Watch<span style={{ color: "aqua" }}>flow</span>
-        </h3>
+      <nav className="custom-navbar shadow-sm">
+        <div className="navbar-top-row">
+          <div className="brand-block">
+            <h3 className="fw-bold brand-name animate__animated animate__fadeInDown">
+              Watch<span style={{ color: "aqua" }}>flow</span>
+            </h3>
 
-        {user && (
-          <h5 className="username animate__animated animate__fadeIn">
-            <Wallet size={18} />  <IndianRupee /> {wallets}
-          </h5>
-        )}
+            {user && (
+              <h5 className="username wallet-text animate__animated animate__fadeIn">
+                <Wallet size={18} /> <IndianRupee size={16} /> {wallets}
+              </h5>
+            )}
+          </div>
 
-        <div className="ms-auto d-flex align-items-center gap-3">
+          <button
+            type="button"
+            className="menu-toggle"
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={menuOpen}
+            onClick={() => setMenuOpen((prev) => !prev)}
+          >
+            {menuOpen ? <X size={22} /> : <Menu size={22} />}
+          </button>
+        </div>
+
+        <div className={`navbar-actions ${menuOpen ? "open" : ""}`}>
           {user ? (
             <h5 className="username animate__animated animate__zoomIn">
               <User size={18} /> Hi, {user.name}

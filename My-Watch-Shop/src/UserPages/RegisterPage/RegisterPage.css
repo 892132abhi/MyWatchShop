@@ -8,16 +8,18 @@
     align-items: center;
     justify-content: center;
     font-family: 'Montserrat', sans-serif;
+    padding: 24px 16px;
 }
 
 .Form {
     max-width: 420px;
-    width: 90%;
+    width: min(100%, 420px);
     padding: 60px 50px;
     background-color: #ffffff;
     text-align: center;
     border: 1px solid #f0f0f0;
     box-shadow: 0 30px 60px rgba(0, 0, 0, 0.02);
+    box-sizing: border-box;
 }
 
 .Form h2 {
@@ -118,4 +120,53 @@
     text-transform: uppercase;
     font-size: 0.75rem;
     letter-spacing: 1px;
+}
+
+@media (max-width: 768px) {
+    .Form {
+        padding: 42px 28px;
+    }
+
+    .Form h2 {
+        font-size: 2rem;
+    }
+
+    .subtitle {
+        margin-bottom: 28px;
+    }
+}
+
+@media (max-width: 480px) {
+    .luxury-page-wrapper {
+        padding: 16px 12px;
+    }
+
+    .Form {
+        padding: 32px 18px;
+    }
+
+    .Form h2 {
+        font-size: 1.75rem;
+    }
+
+    .labels label {
+        font-size: 0.6rem;
+        letter-spacing: 1.5px;
+    }
+
+    .luxury-submit-btn {
+        padding: 14px;
+        letter-spacing: 2px;
+    }
+
+    .form-footer {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        align-items: center;
+    }
+
+    .login-link-btn {
+        margin-left: 0;
+    }
 }

@@ -1,5 +1,6 @@
 body{
     background-color: rgb(190, 139, 139);
+    overflow-x: hidden;
 }
 button{
    background-color: rgb(179, 252, 255);

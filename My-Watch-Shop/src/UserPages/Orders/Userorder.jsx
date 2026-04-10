@@ -50,8 +50,7 @@ export default function Userorder() {
       <header className="page-header">
         <button
           onClick={() => navigate("/products")}
-          className="btn-secondary"
-          style={{ position: "absolute", left: "20px", top: "50px" }}
+          className="btn-secondary order-back-btn"
         >
           ← Back to Gallery
         </button>
@@ -66,10 +65,7 @@ export default function Userorder() {
         </p>
       </header>
 
-      <div
-        className="orders-container"
-        style={{ maxWidth: "800px", margin: "0 auto" }}
-      >
+      <div className="orders-container">
         {order.length > 0 ? (
           order.map((item) => (
             <div key={item.id} className="luxury-order-card">

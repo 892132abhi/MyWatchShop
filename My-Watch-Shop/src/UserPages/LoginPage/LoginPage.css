@@ -7,6 +7,7 @@
     align-items: center;
     background-color: #f4f1ea;
     font-family: 'Montserrat', sans-serif;
+    padding: 24px 16px;
 }
 
 .LoginPage {
@@ -17,6 +18,7 @@
     border: 1px solid #d1cfc7; 
     text-align: center;
     box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    box-sizing: border-box;
 }
 
 .LoginPage h2 {
@@ -101,4 +103,36 @@
     text-decoration: underline;
     text-underline-offset: 4px;
     cursor: pointer;
+}
+
+@media (max-width: 768px) {
+    .LoginPage {
+        padding: 42px 28px;
+    }
+
+    .LoginPage h2 {
+        font-size: 1.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .login-page-container {
+        padding: 16px 12px;
+    }
+
+    .LoginPage {
+        padding: 32px 18px;
+    }
+
+    .LoginPage h2 {
+        font-size: 1.65rem;
+    }
+
+    .logindiv label {
+        font-size: 0.68rem;
+    }
+
+    .login-btn {
+        letter-spacing: 1.5px;
+    }
 }
