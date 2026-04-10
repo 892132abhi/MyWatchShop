@@ -173,6 +173,12 @@ class blockUser(APIView):
         
         
 class Deleteuser(APIView):
+    permission_classes=[IsAdminUser]
+    @extend_schema(
+        tags=["Admin"],
+        summary="delete  user",
+        description="remove user",
+    )
     def delete(self, request, id):
         try:
             user = Users.objects.get(id=id)
