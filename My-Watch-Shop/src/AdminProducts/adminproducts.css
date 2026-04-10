@@ -2,6 +2,7 @@
 
 .admin-products-wrapper {
     font-family: 'Inter', sans-serif;
+    overflow-y: scroll;
     width: 100%;
     max-width: 100%;
     box-sizing: border-box;
