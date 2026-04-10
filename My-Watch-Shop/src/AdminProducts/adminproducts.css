@@ -50,10 +50,10 @@
 }
 
 .add-product-btn:hover {
-    background: #d4af37; /* Gold */
+    background: #d4af37;
 }
 
-/* GRID & CARDS */
+
 .products-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
