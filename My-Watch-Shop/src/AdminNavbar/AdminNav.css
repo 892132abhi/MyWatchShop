@@ -117,8 +117,10 @@
 
 /* FOOTER / LOGOUT */
 .sidebar-footer {
-    padding: 30px;
+    padding: 24px 15px 30px;
     border-top: 1px solid #222;
+    display: flex;
+    justify-content: center;
 }
 
 .logout-btn {
@@ -130,7 +132,8 @@
     justify-content: center;
     gap: 10px;
     padding: 12px;
-    width: 100%;
+    width: auto;
+    min-width: 180px;
     cursor: pointer;
     text-transform: uppercase;
     font-size: 11px;
