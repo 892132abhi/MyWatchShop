@@ -143,26 +143,20 @@ class AddQuantity(APIView):
         if target_qty < 1:
             return Response({"message": "Quantity must be at least 1"}, status=status.HTTP_400_BAD_REQUEST)
 
-        # Calculate the difference
-        # If difference is positive (e.g., 5 - 4 = 1), user added an item.
-        # If difference is negative (e.g., 3 - 4 = -1), user removed an item.
         difference = target_qty - cart_item.quantity
 
         if difference > 0:
-            # User clicked '+'. Check if master inventory has enough stock.
             if product.quantity < difference:
                 return Response({
                     "message": f"Only {product.quantity} more units available in stock.",
                     "current_cart_qty": cart_item.quantity
                 }, status=status.HTTP_400_BAD_REQUEST)
             
-            product.quantity -= difference # Subtract from inventory
+            product.quantity -= difference 
         else:
-            # User clicked '-'. Add the difference back to master inventory.
-            # (Remember: difference is negative here, so we subtract it to add it)
             product.quantity -= difference 
 
-        # Save both
+
         cart_item.quantity = target_qty
         cart_item.save()
         product.save()
