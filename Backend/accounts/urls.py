@@ -7,6 +7,7 @@ urlpatterns=[
     path('register/',views.RegisterPage.as_view(),name='register'),
     path('login/',views.LoginPage.as_view(),name='login'),
     path('activate/<uidb64>/<token>/',views.activate_account,name='activate-account'),
+    path('verify-email/<str:uid>/<str:token>/', views.VerifyEmail.as_view(), name='verify-email'),
     path('token/refresh/',TokenRefreshView.as_view(),name='token_refresh'),
     path('profile/',views.Profiles.as_view(),name="profile"),
     path('adminlogin/',views.AdminLogin.as_view(),name='adminlogin'),

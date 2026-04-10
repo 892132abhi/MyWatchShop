@@ -79,6 +79,21 @@ def activate_account(request, uidb64, token):
     else:
         return HttpResponse("Activation link is invalid or expired.")
 
+class VerifyEmail(APIView):
+    def post(self,request,uid,token):
+        try:
+            id = force_str(urlsafe_base64_decode(uid))
+            user = Users.objects.get(pk=id)
+            if default_token_generator.check_token(user, token):
+                user.is_active = True
+                user.save()
+                return Response({"message": "Email verified successfully!"}, status=status.HTTP_200_OK)
+            else:
+                return Response({"error": "Invalid or expired token"}, status=status.HTTP_400_BAD_REQUEST)
+                
+        except (TypeError, ValueError, OverflowError, Users.DoesNotExist):
+            return Response({"error": "Invalid activation link"}, status=status.HTTP_400_BAD_REQUEST)
+
 class LoginPage(APIView):
     serializer_class = LoginSerializer
     def post(self,request):

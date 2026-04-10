@@ -20,6 +20,7 @@ import AddProducts from './Addproducts/AddProducts'
 import ProtectedRouting from './AppProvider/ProtectedRouting'
 import OrderDetails from './Orderdetails/OrderDetails'
 import Userorder from './UserPages/Orders/Userorder'
+import VerifyEmail from './UserPages/verify'
 function App() {
 
   return (
