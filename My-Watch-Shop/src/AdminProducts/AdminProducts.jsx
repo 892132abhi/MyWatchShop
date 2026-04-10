@@ -67,7 +67,7 @@ export default function AdminProducts() {
         </button>
       </header>
 
-      <div className="products-grid ">
+      <div className="products-grid">
         {products.length > 0 ? (
           products.map((item) => (
             <div key={item.id} className="product-admin-card animate__animated animate__fadeIn">
