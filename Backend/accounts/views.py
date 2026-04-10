@@ -32,11 +32,8 @@ class RegisterPage(APIView):
             uid = urlsafe_base64_encode(force_bytes(user.pk))
             token = default_token_generator.make_token(user)
 
-            activation_path = reverse('activate-account', kwargs={
-                'uidb64': uid,
-                'token': token
-            })
-            activation_link = f"https://192.168.11.127:8000{activation_path}"
+
+            activation_link = f"https://my-watch-shop.vercel.app/verify-email/${uid}/${token}"
 
             subject = "Verify your WatchStore account"
             message = (

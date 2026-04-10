@@ -37,7 +37,7 @@ function App() {
     </Route>
 <Route path='/login' element={<UserLogin />}/>
 <Route path='/register' element={<UserRegister />}/>
-
+<Route path="/verify-email/:uid/:token" element={<VerifyEmail />} />
 
 <Route path='/adminlogin' element={<AdminLogin />}/>
 <Route element={<AdminNavbar />}>
