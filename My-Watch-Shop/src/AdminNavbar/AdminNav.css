@@ -4,6 +4,7 @@
     display: flex;
     min-height: 100vh;
     background-color: #fcfcfc;
+    align-items: stretch;
 }
 
 .admin-sidebar {
@@ -15,7 +16,9 @@
     position: sticky;
     top: 0;
     height: 100vh;
+    min-height: 100vh;
     border-right: 1px solid #222;
+    box-sizing: border-box;
 }
 
 /* BRANDING */
@@ -79,6 +82,7 @@
     flex-direction: column;
     gap: 5px;
     padding: 0 15px;
+    min-height: 0;
 }
 
 .nav-item {
