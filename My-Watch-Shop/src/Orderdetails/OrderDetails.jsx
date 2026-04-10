@@ -123,7 +123,6 @@ export default function OrderDetails() {
           <thead style={theme.thead}>
             <tr>
               <th style={theme.th}>Client</th>
-              <th style={theme.th}>Item</th>
               <th style={theme.th}>Order ID</th>
               <th style={theme.th}>Payment Method</th>
               <th style={theme.th}>Amount</th>
@@ -139,7 +138,6 @@ export default function OrderDetails() {
                   <span style={theme.clientName}>{item.user_name}</span>
                   <span style={theme.clientEmail}>{item.user_email}</span>
                 </td>
-                <td style={theme.td}>#{item.order}</td>
                 <td style={theme.td}>#{item.order_id}</td>
 
                 <td style={theme.td}>
