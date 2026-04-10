@@ -2,7 +2,6 @@
 
 .admin-products-wrapper {
     font-family: 'Inter', sans-serif;
-    overflow-y: scroll;
     width: 100%;
     max-width: 100%;
     box-sizing: border-box;
@@ -63,6 +62,7 @@
     max-width: 100%;
     box-sizing: border-box;
     align-items: stretch;
+    overflow-y: scroll;
 }
 
 .product-admin-card {
