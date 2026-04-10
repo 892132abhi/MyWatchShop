@@ -12,6 +12,7 @@ urlpatterns=[
     path('adminlogin/',views.AdminLogin.as_view(),name='adminlogin'),
     path('userlist/',views.UserList.as_view(),name='user-list'),
     path('users/block/<str:email>/',views.blockUser.as_view(),name='block-user'),
+    path('users/delete/<str:email>/',views.Deleteuser.as_view(),naem='delete-user'),
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
     path('api/docs/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
 ]

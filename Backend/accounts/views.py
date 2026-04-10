@@ -36,7 +36,7 @@ class RegisterPage(APIView):
                 'uidb64': uid,
                 'token': token
             })
-            activation_link = f"https://watchflow.duckdns.org{activation_path}"
+            activation_link = f"https://192.168.11.127:8000{activation_path}"
 
             subject = "Verify your WatchStore account"
             message = (
@@ -158,3 +158,12 @@ class blockUser(APIView):
         return Response({
             "message":f"{user.name} status is Updated"
         },status=status.HTTP_200_OK)
+class Deleteuser(APIView):
+    def delete(self,request,email):
+        try:
+            user = Users.objects.get(email=email)
+        except Users.DoesNotExist:
+            return Response({"message":"user not exist"})
+        user.delete()
+        return Response({"message":"user deleted"})
+    
