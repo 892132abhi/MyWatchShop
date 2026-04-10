@@ -139,7 +139,7 @@ export default function OrderDetails() {
                   <span style={theme.clientName}>{item.user_name}</span>
                   <span style={theme.clientEmail}>{item.user_email}</span>
                 </td>
-                <td style={theme.td}>#{item.order.name}</td>
+                <td style={theme.td}>#{item.order}</td>
                 <td style={theme.td}>#{item.order_id}</td>
 
                 <td style={theme.td}>
