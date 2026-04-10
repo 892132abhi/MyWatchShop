@@ -88,13 +88,14 @@ export default function AdminNavbar() {
           >
             <ShoppingBag size={18} /> <span>Orders</span>
           </button>
-        </nav>
-
-        <div className="sidebar-footer">
+          <div className="sidebar-footer">
           <button className="logout-btn" onClick={handleLogout}>
             <LogOutIcon size={18} /> <span>Sign Out</span>
           </button>
         </div>
+        </nav>
+
+        
       </aside>
 
       <main className="admin-main-content">
