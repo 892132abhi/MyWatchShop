@@ -33,7 +33,7 @@ class RegisterPage(APIView):
             token = default_token_generator.make_token(user)
 
 
-            activation_link = f"https://my-watch-shop.vercel.app/verify-email/${uid}/${token}"
+            activation_link = f"https://my-watch-shop.vercel.app/verify-email/{uid}/{token}"
 
             subject = "Verify your WatchStore account"
             message = (

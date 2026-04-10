@@ -52,8 +52,8 @@ export default function UserRegister() {
         title: "Registration Complete",
         text: "Welcome to our WatchStore.",
         icon: "success",
-        confirmButtonColor: "#d4af37", // Matching Gold
-      }).then(() => navigate("/"))
+        confirmButtonColor: "#d4af37", 
+      })
 
     } catch (error) {
       SetErr("System error: " + error.message)
