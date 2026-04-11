@@ -130,18 +130,9 @@ export default function UserRegister() {
         {submitted && err && <p className="error-text">{err}</p>}
 
         {/* The Button with Loader Logic */}
-       <button type="submit" className="luxury-submit-btn" disabled={loading}>
-  {loading ? (
-    <div className="luxury-loader">
-      <div className="loader-ring"></div>
-      <div className="loader-ring"></div>
-      <div className="loader-ring"></div>
-      <div className="loader-diamond"></div>
-    </div>
-  ) : (
-    "Create Account"
-  )}
-</button>
+        <button type="submit" className="luxury-submit-btn" disabled={loading}>
+          {loading ? <span className="loader-circle"></span> : "Create Account"}
+        </button>
         
         <div className="form-footer">
           <span>Already a member?</span>
