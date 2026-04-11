@@ -1,8 +1,7 @@
-/* ====== LUXURY BOUTIQUE THEME ====== */
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Playfair+Display:ital,wght@0,700;1,400&display=swap');
 
 .luxury-page-wrapper {
-    background-color: #fcfbf9; /* Signature off-white */
+    background-color: #fcfbf9;
     min-height: 100vh;
     display: flex;
     align-items: center;
@@ -89,11 +88,37 @@
     cursor: pointer;
     margin-top: 20px;
     transition: 0.3s;
+    /* Centers the loader */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 55px; 
 }
 
-.luxury-submit-btn:hover {
+.luxury-submit-btn:hover:not(:disabled) {
     background-color: #d4af37;
     color: #1a1a1a;
+}
+
+.luxury-submit-btn:disabled {
+    background-color: #444;
+    cursor: not-allowed;
+}
+
+/* --- THE ROTATING LOADER (FIXED) --- */
+.loader-circle {
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba(255, 255, 255, 0.2); /* Faded Ring */
+    border-top: 2px solid #d4af37; /* Gold spinning ball */
+    border-radius: 50%;
+    display: block; /* Essential for transform to work on span */
+    animation: luxury-spin 0.8s linear infinite;
+}
+
+@keyframes luxury-spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
 }
 
 .error-text {
@@ -120,53 +145,4 @@
     text-transform: uppercase;
     font-size: 0.75rem;
     letter-spacing: 1px;
-}
-
-@media (max-width: 768px) {
-    .Form {
-        padding: 42px 28px;
-    }
-
-    .Form h2 {
-        font-size: 2rem;
-    }
-
-    .subtitle {
-        margin-bottom: 28px;
-    }
-}
-
-@media (max-width: 480px) {
-    .luxury-page-wrapper {
-        padding: 16px 12px;
-    }
-
-    .Form {
-        padding: 32px 18px;
-    }
-
-    .Form h2 {
-        font-size: 1.75rem;
-    }
-
-    .labels label {
-        font-size: 0.6rem;
-        letter-spacing: 1.5px;
-    }
-
-    .luxury-submit-btn {
-        padding: 14px;
-        letter-spacing: 2px;
-    }
-
-    .form-footer {
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-        align-items: center;
-    }
-
-    .login-link-btn {
-        margin-left: 0;
-    }
 }
