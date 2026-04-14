@@ -7,19 +7,18 @@
     align-items: center;
     justify-content: center;
     font-family: 'Montserrat', sans-serif;
-    padding: 32px 20px;
+    padding: 24px 16px;
 }
 
 .Form {
-    width: 100%;
-    max-width: 460px;
+    max-width: 420px;
+    width: min(100%, 420px);
     padding: 60px 50px;
     background-color: #ffffff;
     text-align: center;
     border: 1px solid #f0f0f0;
     box-shadow: 0 30px 60px rgba(0, 0, 0, 0.02);
     box-sizing: border-box;
-    margin: 0 auto;
 }
 
 .Form h2 {
@@ -58,7 +57,6 @@
 }
 
 .labels input {
-    display: block;
     width: 100%;
     border: none;
     border-bottom: 1px solid #e0e0e0;
@@ -134,11 +132,6 @@
     margin-top: 30px;
     font-size: 0.8rem;
     color: #666;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 8px;
 }
 
 .login-link-btn {
@@ -147,59 +140,9 @@
     border-bottom: 1px solid #d4af37;
     color: #1a1a1a;
     font-weight: 700;
+    margin-left: 8px;
     cursor: pointer;
     text-transform: uppercase;
     font-size: 0.75rem;
     letter-spacing: 1px;
-}
-
-@media (min-width: 992px) {
-    .luxury-page-wrapper {
-        padding: 48px 24px;
-    }
-
-    .Form {
-        padding: 64px 56px;
-    }
-}
-
-@media (max-width: 768px) {
-    .luxury-page-wrapper {
-        padding: 24px 16px;
-    }
-
-    .Form {
-        padding: 44px 32px;
-    }
-
-    .Form h2 {
-        font-size: 2rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .luxury-page-wrapper {
-        padding: 16px 12px;
-    }
-
-    .Form {
-        padding: 32px 18px;
-    }
-
-    .Form h2 {
-        font-size: 1.7rem;
-    }
-
-    .subtitle {
-        margin-bottom: 28px;
-    }
-
-    .labels label {
-        font-size: 0.68rem;
-        letter-spacing: 1.5px;
-    }
-
-    .luxury-submit-btn {
-        letter-spacing: 2px;
-    }
 }

@@ -3,8 +3,7 @@
 .admin-products-wrapper {
     font-family: 'Inter', sans-serif;
     width: 100%;
-    max-width: 1280px;
-    margin: 0 auto;
+    max-width: 100%;
     box-sizing: border-box;
 }
 
@@ -63,6 +62,7 @@
     max-width: 100%;
     box-sizing: border-box;
     align-items: stretch;
+    overflow-y: scroll;
 }
 
 .product-admin-card {
@@ -183,10 +183,6 @@
 }
 
 @media (max-width: 480px) {
-    .admin-products-wrapper {
-        padding: 0;
-    }
-
     .products-grid {
         grid-template-columns: 1fr;
     }
