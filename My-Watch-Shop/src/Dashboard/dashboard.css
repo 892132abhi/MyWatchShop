@@ -3,6 +3,9 @@
 .dashboard-wrapper {
     font-family: 'Inter', sans-serif;
     color: #1a1a1a;
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
 }
 
 .db-header {
@@ -165,5 +168,16 @@
 }
 
 @media (max-width: 768px) {
+  .db-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+
+  .db-header h1 {
+    font-size: 1.9rem;
+  }
+
   .charts-row { grid-template-columns: 1fr; }
 }

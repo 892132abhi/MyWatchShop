@@ -9,7 +9,7 @@ html, body {
 .order-page-container {
     background-color: #fcfbf9;
     min-height: 100vh;
-    padding: 60px 40px;
+    padding: 40px 24px;
     font-family: 'Montserrat', sans-serif;
 }
 
@@ -174,4 +174,33 @@ html, body {
   background-color: #eef3ff;
   color: #355cbd;
   border-color: #cfdcff;
+}
+
+@media (max-width: 768px) {
+    .order-page-container {
+        padding: 28px 16px;
+    }
+
+    .order-header {
+        margin-bottom: 32px;
+    }
+
+    .order-header h2 {
+        font-size: 2rem;
+    }
+
+    .luxury-table th,
+    .luxury-table td {
+        padding: 14px 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .order-page-container {
+        padding: 20px 12px;
+    }
+
+    .order-header h2 {
+        font-size: 1.7rem;
+    }
 }

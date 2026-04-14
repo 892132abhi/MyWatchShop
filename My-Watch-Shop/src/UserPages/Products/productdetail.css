@@ -6,7 +6,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 40px;
+    padding: 40px 24px;
     font-family: 'Montserrat', sans-serif;
 }
 
@@ -123,9 +123,23 @@
         flex-direction: column;
     }
     .details-info-section {
-        padding: 40px 20px;
+        padding: 40px 24px;
     }
     .details-brand {
         font-size: 2.2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .details-container {
+        padding: 20px 12px;
+    }
+
+    .details-info-section {
+        padding: 28px 18px;
+    }
+
+    .details-brand {
+        font-size: 1.8rem;
     }
 }

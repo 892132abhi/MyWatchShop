@@ -1,20 +1,23 @@
 .admin-login-page {
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
     background-color: #fcfbf9; /* Off-white luxury background */
     font-family: 'Montserrat', sans-serif;
+    padding: 24px 16px;
 }
 
 .luxury-login-card {
     background: white;
-    width: 400px;
+    width: 100%;
+    max-width: 400px;
     padding: 50px 40px;
     border: 1px solid #eee;
     box-shadow: 0 30px 60px rgba(0,0,0,0.05);
     position: relative;
     text-align: center;
+    margin: 0 auto;
 }
 
 .back-btn {
@@ -117,4 +120,20 @@
 .login-submit-btn:hover {
     background: #d4af37;
     box-shadow: 0 10px 20px rgba(212, 175, 55, 0.2);
+}
+
+@media (max-width: 768px) {
+    .luxury-login-card {
+        padding: 42px 28px;
+    }
+}
+
+@media (max-width: 480px) {
+    .admin-login-page {
+        padding: 16px 12px;
+    }
+
+    .luxury-login-card {
+        padding: 34px 18px;
+    }
 }

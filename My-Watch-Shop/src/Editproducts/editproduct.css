@@ -98,7 +98,8 @@
     border-radius: 8px;
     overflow: hidden;
     margin-bottom: 15px;
-    margin-left: 150px;
+    margin-left: auto;
+    margin-right: auto;
     box-shadow: 0 10px 25px rgba(0,0,0,0.1);
     border: 1px solid #eee;
     display: flex;
@@ -150,4 +151,34 @@
     background: #fafafa;
     border: 1px dashed #ddd !important;
     cursor: pointer;
+}
+
+@media (max-width: 768px) {
+    .form-card-container {
+        padding: 28px 20px;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .form-actions {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .form-card-container {
+        padding: 22px 14px;
+    }
+
+    .loading-state {
+        padding: 60px 20px;
+    }
 }

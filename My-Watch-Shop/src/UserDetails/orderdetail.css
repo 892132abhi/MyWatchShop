@@ -3,6 +3,9 @@
 .order-details-wrapper {
     font-family: 'Inter', sans-serif;
     color: #1a1a1a;
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
 }
 
 .page-header {
@@ -30,6 +33,7 @@
     box-shadow: 0 4px 20px rgba(0,0,0,0.03);
     max-height: 75vh;
     overflow-y: auto;
+    overflow-x: auto;
 }
 
 .luxury-order-table {
@@ -134,4 +138,15 @@
 /* HOVER EFFECT */
 .order-row:hover {
     background-color: #fafafa;
+}
+
+@media (max-width: 768px) {
+    .page-header h1 {
+        font-size: 1.9rem;
+    }
+
+    .luxury-order-table thead th,
+    .luxury-order-table td {
+        padding: 14px 12px;
+    }
 }

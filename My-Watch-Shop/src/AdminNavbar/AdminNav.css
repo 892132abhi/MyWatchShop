@@ -5,6 +5,7 @@
     min-height: 100vh;
     background: #f6f4ef;
     align-items: stretch;
+    width: 100%;
 }
 
 .admin-sidebar {
@@ -158,4 +159,63 @@
     overflow-y: auto;
     padding: 40px;
     background: #f6f4ef;
+    min-width: 0;
+}
+
+@media (max-width: 1200px) {
+    .admin-sidebar {
+        width: 220px;
+    }
+
+    .admin-main-content {
+        padding: 28px 24px;
+    }
+}
+
+@media (max-width: 900px) {
+    .admin-layout-wrapper {
+        flex-direction: column;
+    }
+
+    .admin-sidebar {
+        width: 100%;
+        height: auto;
+        min-height: auto;
+        position: static;
+    }
+
+    .sidebar-brand,
+    .user-profile-section,
+    .nav-menu,
+    .sidebar-footer {
+        width: min(100%, 1100px);
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .nav-menu {
+        padding: 0 16px 16px;
+    }
+
+    .sidebar-footer {
+        justify-content: flex-start;
+        padding: 16px;
+    }
+}
+
+@media (max-width: 576px) {
+    .sidebar-brand,
+    .user-profile-section,
+    .sidebar-footer {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .admin-main-content {
+        padding: 20px 12px;
+    }
+
+    .logout-btn {
+        width: 100%;
+    }
 }

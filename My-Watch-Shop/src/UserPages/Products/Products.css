@@ -97,6 +97,9 @@ body {
   gap: 15px;
   flex-wrap: wrap;
   border-bottom: 1px solid #d4af37; /* Gold accent */
+  width: min(100%, 1280px);
+  margin: 0 auto;
+  box-sizing: border-box;
 }
 
 .navbar .search-container input {
@@ -140,7 +143,9 @@ body {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr)); 
   gap: 40px; /* Space between the luxury cards */
-  padding: 60px 10%; /* More side padding for a boutique feel */
+  width: min(100%, 1280px);
+  margin: 0 auto;
+  padding: 60px 24px; /* More side padding for a boutique feel */
   background-color: #fcfbf9;
 }
 
@@ -232,6 +237,7 @@ body {
   .navbar {
     justify-content: stretch;
     gap: 12px;
+    width: calc(100% - 32px);
   }
 
   .navbar .search-container {
@@ -244,7 +250,7 @@ body {
 
   .productdiv {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    padding: 40px 6%;
+    padding: 40px 20px;
     gap: 28px;
   }
 }
@@ -266,6 +272,7 @@ body {
 
   .productdiv {
     grid-template-columns: 1fr;
+    width: 100%;
     padding: 28px 16px 40px;
     gap: 20px;
   }
