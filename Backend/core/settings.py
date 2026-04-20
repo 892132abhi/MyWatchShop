@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 
 from pathlib import Path
 from datetime import timedelta
-import cloudinary
+# import cloudinary
 import mimetypes
 import os
 from dotenv import load_dotenv
@@ -20,11 +20,11 @@ load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-cloudinary.config(
-    cloud_name=os.getenv("clouds_name"),
-    api_key=os.getenv("api_keys"),
-    api_secret=os.getenv("api_secrets"),
-)
+# cloudinary.config(
+#     cloud_name=os.getenv("clouds_name"),
+#     api_key=os.getenv("api_keys"),
+#     api_secret=os.getenv("api_secrets"),
+# )
 REST_FRAMEWORK={
     'DEFAULT_AUTHENTICATION_CLASSES':(
          'rest_framework_simplejwt.authentication.JWTAuthentication',
@@ -70,8 +70,8 @@ INSTALLED_APPS = [
     'orderlist',
     'admindashboard',
     'wallet',
-    'cloudinary_storage',
-    'cloudinary',
+    # 'cloudinary_storage',
+    # 'cloudinary',
     'drf_spectacular',
     'storages',
     
@@ -188,7 +188,7 @@ CLOUDINARY_STORAGE = {
     'API_SECRET':os.getenv("API_SECRET")
 }
 
-DEFAULT_FILE_STORAGE = os.getenv("DEFAULT_STORAGE")
+DEFAULT_FILE_STORAGE = "storages.backends.s3.S3Storage"
 
 RAZORPAY_KEY_ID = os.getenv("PAYMENT_RAZORPAY_KEY_ID")
 RAZORPAY_KEY_SECRET =os.getenv("PAYMENT_RAZORPAY_KEY_SECRET")
@@ -206,4 +206,4 @@ AWS_S3_REGION_NAME = os.getenv('AWS_S3_REGION')
 AWS_S3_FILE_OVERWRITE = False
 AWS_DEFAULT_ACL = None
 
-STATICFILES_STORAGE =os.getenv('STORAGE')
+STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
