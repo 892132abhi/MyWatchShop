@@ -73,6 +73,7 @@ INSTALLED_APPS = [
     'cloudinary_storage',
     'cloudinary',
     'drf_spectacular',
+    'storages',
     
 ]
 
@@ -196,3 +197,13 @@ mimetypes.add_type("text/css", ".css", True)
 
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
+
+AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY')
+AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS')
+AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET')
+AWS_S3_REGION_NAME = os.getenv('AWS_S3_REGION')
+
+AWS_S3_FILE_OVERWRITE = False
+AWS_DEFAULT_ACL = None
+
+STATICFILES_STORAGE = os.getenv('STORAGE')
