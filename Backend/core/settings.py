@@ -50,7 +50,7 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ['watchflow.duckdns.org', 'localhost', '127.0.0.1', '*']
 
 
 # Application definition
@@ -168,6 +168,9 @@ CORS_ALLOWED_ORIGINS=[
     'http://localhost:5174',
 ]
 
+CSRF_TRUSTED_ORIGINS = [
+    os.getenv("CSRF_TRUSTED_ORIGINS", "https://watchflow.duckdns.org")
+]
 AUTH_USER_MODEL=os.getenv("AUTH_USER_MODEL_NAME")
 # SMTP
 EMAIL_BACKEND =os.getenv("SMTP_EMAIL_BACKEND")
@@ -190,3 +193,6 @@ RAZORPAY_KEY_ID = os.getenv("PAYMENT_RAZORPAY_KEY_ID")
 RAZORPAY_KEY_SECRET =os.getenv("PAYMENT_RAZORPAY_KEY_SECRET")
 
 mimetypes.add_type("text/css", ".css", True)
+
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
