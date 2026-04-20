@@ -166,10 +166,7 @@ CORS_ALLOWED_ORIGINS=[
     'http://localhost:5175',
     'http://localhost:5174',
 ]
-ALLOWED_HOSTS = ['watchflow.duckdns.org', 'localhost', '127.0.0.1']
-CSRF_TRUSTED_ORIGINS = [
-    'https://watchflow.duckdns.org',
-]
+
 AUTH_USER_MODEL=os.getenv("AUTH_USER_MODEL_NAME")
 # SMTP
 EMAIL_BACKEND =os.getenv("SMTP_EMAIL_BACKEND")
