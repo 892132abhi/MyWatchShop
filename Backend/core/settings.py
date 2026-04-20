@@ -198,16 +198,15 @@ mimetypes.add_type("text/css", ".css", True)
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
 
-AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
-AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
-AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET_NAME')
-AWS_S3_REGION_NAME = 'ap-south-1' 
+AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY')
+AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS')
+AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET')
+AWS_S3_REGION_NAME = os.getenv('AWS_S3_REGION')
 
 AWS_S3_FILE_OVERWRITE = False
 AWS_DEFAULT_ACL = None
 
-# If we have the bucket name, FORCE S3 usage
-if AWS_STORAGE_BUCKET_NAME:
-    STATICFILES_STORAGE = 'storages.backends.s3boto3.S3StaticStorage'
+if  os.getenv('AWS_STORAGE_BUCKET_NAME'):
+    STATICFILES_STORAGE = os.getenv('STORAGE')
 else:
-    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+    STATICFILES_STORAGE = os.getenv('STATICFILES_STORAGE_NAME')
