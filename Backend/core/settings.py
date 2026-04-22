@@ -188,7 +188,7 @@ CLOUDINARY_STORAGE = {
     'API_SECRET':os.getenv("API_SECRET")
 }
 
-DEFAULT_FILE_STORAGE = "storages.backends.s3.S3Storage"
+
 
 RAZORPAY_KEY_ID = os.getenv("PAYMENT_RAZORPAY_KEY_ID")
 RAZORPAY_KEY_SECRET =os.getenv("PAYMENT_RAZORPAY_KEY_SECRET")
@@ -206,4 +206,5 @@ AWS_S3_REGION_NAME = os.getenv('AWS_S3_REGION')
 AWS_S3_FILE_OVERWRITE = False
 AWS_DEFAULT_ACL = None
 
+DEFAULT_FILE_STORAGE = "storages.backends.s3.S3Storage"
 STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
