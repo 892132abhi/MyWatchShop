@@ -119,7 +119,10 @@ DATABASES = {
         'USER': os.getenv("DB_USER"),         # Your default Postgres username
         'PASSWORD': os.getenv("DB_PASSWORD"), # The password you set during Postgres installation
         'HOST': os.getenv("DB_HOST"),        # Usually localhost
-        'PORT': os.getenv("DB_PORT"),             # Default PostgreSQL port
+        'PORT': os.getenv("DB_PORT"),  
+        'OPTIONS': {
+            'sslmode': 'require',
+        } # Default PostgreSQL port
     }
 }
 
