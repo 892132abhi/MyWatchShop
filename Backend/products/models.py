@@ -1,5 +1,4 @@
 from django.db import models
-from cloudinary.models import CloudinaryField
 from accounts.models import Users
 # Create your models here.
 class Products(models.Model):
@@ -9,7 +8,7 @@ class Products(models.Model):
     type = models.CharField(max_length=100)
     description = models.CharField(max_length=200)
     quantity = models.PositiveIntegerField(default=0)
-    image=CloudinaryField('image')
+    image = models.ImageField(upload_to="products/")
     def __str__(self):
         return self.name
     
